@@ -80,7 +80,7 @@ function OpportunitesPage() {
       localisation: String(form.get("localisation")),
       montantEstime: Number(form.get("montant")),
       responsableId: String(form.get("responsableId")),
-      stage: "Nouveau",
+      stage: "À qualifier",
       prochaineAction: "Qualifier la demande",
       echeance: String(form.get("echeance")),
       scoreIA: 60 + Math.round(Math.random() * 35),

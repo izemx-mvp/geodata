@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CalendrierAoRouteImport } from './routes/calendrier-ao'
-import { Route as CalendrierEditorialRouteImport } from './routes/calendrier-editorial'
 import { Route as CommunityManagerRouteImport } from './routes/community-manager'
 import { Route as ConfigurationIaRouteImport } from './routes/configuration-ia'
 import { Route as DevisRouteImport } from './routes/devis'
@@ -21,7 +20,6 @@ import { Route as EquipesRouteImport } from './routes/equipes'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as OpportunitesDetecteesRouteImport } from './routes/opportunites-detectees'
 import { Route as ReferencesRouteImport } from './routes/references'
-import { Route as ReseauxSociauxRouteImport } from './routes/reseaux-sociaux'
 import { Route as RolesRouteImport } from './routes/roles'
 import { Route as UtilisateursRouteImport } from './routes/utilisateurs'
 import { Route as AffairesIndexRouteImport } from './routes/affaires.index'
@@ -41,11 +39,6 @@ const IndexRoute = IndexRouteImport.update({
 const CalendrierAoRoute = CalendrierAoRouteImport.update({
   id: '/calendrier-ao',
   path: '/calendrier-ao',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CalendrierEditorialRoute = CalendrierEditorialRouteImport.update({
-  id: '/calendrier-editorial',
-  path: '/calendrier-editorial',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CommunityManagerRoute = CommunityManagerRouteImport.update({
@@ -91,11 +84,6 @@ const OpportunitesDetecteesRoute = OpportunitesDetecteesRouteImport.update({
 const ReferencesRoute = ReferencesRouteImport.update({
   id: '/references',
   path: '/references',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReseauxSociauxRoute = ReseauxSociauxRouteImport.update({
-  id: '/reseaux-sociaux',
-  path: '/reseaux-sociaux',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RolesRoute = RolesRouteImport.update({
@@ -152,7 +140,6 @@ const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
-  '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/community-manager': typeof CommunityManagerRoute
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
@@ -162,7 +149,6 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
   '/references': typeof ReferencesRoute
-  '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/roles': typeof RolesRoute
   '/utilisateurs': typeof UtilisateursRoute
   '/affaires/$id': typeof AffairesIdRoute
@@ -177,7 +163,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
-  '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/community-manager': typeof CommunityManagerRoute
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
@@ -187,7 +172,6 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
   '/references': typeof ReferencesRoute
-  '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/roles': typeof RolesRoute
   '/utilisateurs': typeof UtilisateursRoute
   '/affaires/$id': typeof AffairesIdRoute
@@ -203,7 +187,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
-  '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/community-manager': typeof CommunityManagerRoute
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
@@ -213,7 +196,6 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
   '/references': typeof ReferencesRoute
-  '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/roles': typeof RolesRoute
   '/utilisateurs': typeof UtilisateursRoute
   '/affaires/$id': typeof AffairesIdRoute
@@ -230,7 +212,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/calendrier-ao'
-    | '/calendrier-editorial'
     | '/community-manager'
     | '/configuration-ia'
     | '/devis'
@@ -240,7 +221,6 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/opportunites-detectees'
     | '/references'
-    | '/reseaux-sociaux'
     | '/roles'
     | '/utilisateurs'
     | '/affaires/$id'
@@ -255,7 +235,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/calendrier-ao'
-    | '/calendrier-editorial'
     | '/community-manager'
     | '/configuration-ia'
     | '/devis'
@@ -265,7 +244,6 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/opportunites-detectees'
     | '/references'
-    | '/reseaux-sociaux'
     | '/roles'
     | '/utilisateurs'
     | '/affaires/$id'
@@ -280,7 +258,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/calendrier-ao'
-    | '/calendrier-editorial'
     | '/community-manager'
     | '/configuration-ia'
     | '/devis'
@@ -290,7 +267,6 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/opportunites-detectees'
     | '/references'
-    | '/reseaux-sociaux'
     | '/roles'
     | '/utilisateurs'
     | '/affaires/$id'
@@ -306,7 +282,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendrierAoRoute: typeof CalendrierAoRoute
-  CalendrierEditorialRoute: typeof CalendrierEditorialRoute
   CommunityManagerRoute: typeof CommunityManagerRoute
   ConfigurationIaRoute: typeof ConfigurationIaRoute
   DevisRoute: typeof DevisRoute
@@ -316,7 +291,6 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   OpportunitesDetecteesRoute: typeof OpportunitesDetecteesRoute
   ReferencesRoute: typeof ReferencesRoute
-  ReseauxSociauxRoute: typeof ReseauxSociauxRoute
   RolesRoute: typeof RolesRoute
   UtilisateursRoute: typeof UtilisateursRoute
   AffairesIdRoute: typeof AffairesIdRoute
@@ -343,13 +317,6 @@ declare module '@tanstack/react-router' {
       path: '/calendrier-ao'
       fullPath: '/calendrier-ao'
       preLoaderRoute: typeof CalendrierAoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/calendrier-editorial': {
-      id: '/calendrier-editorial'
-      path: '/calendrier-editorial'
-      fullPath: '/calendrier-editorial'
-      preLoaderRoute: typeof CalendrierEditorialRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/community-manager': {
@@ -413,13 +380,6 @@ declare module '@tanstack/react-router' {
       path: '/references'
       fullPath: '/references'
       preLoaderRoute: typeof ReferencesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reseaux-sociaux': {
-      id: '/reseaux-sociaux'
-      path: '/reseaux-sociaux'
-      fullPath: '/reseaux-sociaux'
-      preLoaderRoute: typeof ReseauxSociauxRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/roles': {
@@ -498,7 +458,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendrierAoRoute: CalendrierAoRoute,
-  CalendrierEditorialRoute: CalendrierEditorialRoute,
   CommunityManagerRoute: CommunityManagerRoute,
   ConfigurationIaRoute: ConfigurationIaRoute,
   DevisRoute: DevisRoute,
@@ -508,7 +467,6 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   OpportunitesDetecteesRoute: OpportunitesDetecteesRoute,
   ReferencesRoute: ReferencesRoute,
-  ReseauxSociauxRoute: ReseauxSociauxRoute,
   RolesRoute: RolesRoute,
   UtilisateursRoute: UtilisateursRoute,
   AffairesIdRoute: AffairesIdRoute,

@@ -110,14 +110,8 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
 
 function Logo() {
   return (
-    <Link to="/" className="flex items-center gap-2.5 px-4 py-5">
-      <span className="grid size-9 place-items-center rounded-lg bg-primary text-primary-foreground">
-        <LayoutGrid className="size-5" />
-      </span>
-      <span className="leading-tight">
-        <span className="block text-base font-bold tracking-[0.18em] text-sidebar-foreground">GEODATA</span>
-        <span className="block text-[10px] tracking-wide text-sidebar-foreground/60 uppercase">Plateforme IA</span>
-      </span>
+    <Link to="/" className="flex items-center gap-3 px-4 py-5">
+      <BrandLogo className="h-10" />
     </Link>
   );
 }
@@ -126,12 +120,35 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { currentUser, setCurrentUserId, state, can } = useGeo();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const nonLues = state.notifications.filter((n) => !n.lue).length;
+  const [authed, setAuthed] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    setAuthed(window.localStorage.getItem("geodata-auth") === "ok");
+  }, []);
+
+  if (authed === null) {
+    return <div className="min-h-screen bg-anthracite" />;
+  }
+
+  if (!authed) {
+    return (
+      <LoginScreen
+        onSuccess={() => {
+          window.localStorage.setItem("geodata-auth", "ok");
+          setAuthed(true);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
+        <div className="pointer-events-none absolute inset-0 opacity-40 geo-grid-live" />
+        <div className="relative flex min-h-0 flex-1 flex-col">
         <Logo />
         <ScrollArea className="flex-1">
+
           <nav className="space-y-5 px-3 pb-8">
             {NAV.map((groupe) => {
               const items = groupe.items.filter((i) => can(i.section) || can("*"));

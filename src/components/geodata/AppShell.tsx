@@ -26,6 +26,7 @@ import {
   Truck,
   Users,
   UsersRound,
+  Route as Route2,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";

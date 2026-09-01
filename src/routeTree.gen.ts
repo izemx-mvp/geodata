@@ -10,17 +10,32 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppelsOffresRouteImport } from './routes/appels-offres'
+import { Route as CalendrierAoRouteImport } from './routes/calendrier-ao'
 import { Route as CalendrierEditorialRouteImport } from './routes/calendrier-editorial'
 import { Route as ClientsRouteImport } from './routes/clients'
 import { Route as ConsultationsRouteImport } from './routes/consultations'
 import { Route as DevisRouteImport } from './routes/devis'
+import { Route as DossiersRouteImport } from './routes/dossiers'
 import { Route as OpportunitesRouteImport } from './routes/opportunites'
+import { Route as OpportunitesDetecteesRouteImport } from './routes/opportunites-detectees'
+import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as ReseauxSociauxRouteImport } from './routes/reseaux-sociaux'
 import { Route as OpportunitesIdRouteImport } from './routes/opportunites.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppelsOffresRoute = AppelsOffresRouteImport.update({
+  id: '/appels-offres',
+  path: '/appels-offres',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendrierAoRoute = CalendrierAoRouteImport.update({
+  id: '/calendrier-ao',
+  path: '/calendrier-ao',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendrierEditorialRoute = CalendrierEditorialRouteImport.update({
@@ -43,9 +58,24 @@ const DevisRoute = DevisRouteImport.update({
   path: '/devis',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DossiersRoute = DossiersRouteImport.update({
+  id: '/dossiers',
+  path: '/dossiers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OpportunitesRoute = OpportunitesRouteImport.update({
   id: '/opportunites',
   path: '/opportunites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpportunitesDetecteesRoute = OpportunitesDetecteesRouteImport.update({
+  id: '/opportunites-detectees',
+  path: '/opportunites-detectees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferencesRoute = ReferencesRouteImport.update({
+  id: '/references',
+  path: '/references',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReseauxSociauxRoute = ReseauxSociauxRouteImport.update({
@@ -61,32 +91,47 @@ const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/appels-offres': typeof AppelsOffresRoute
+  '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
+  '/dossiers': typeof DossiersRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/references': typeof ReferencesRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/appels-offres': typeof AppelsOffresRoute
+  '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
+  '/dossiers': typeof DossiersRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/references': typeof ReferencesRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/appels-offres': typeof AppelsOffresRoute
+  '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
+  '/dossiers': typeof DossiersRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/references': typeof ReferencesRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
@@ -94,42 +139,62 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/appels-offres'
+    | '/calendrier-ao'
     | '/calendrier-editorial'
     | '/clients'
     | '/consultations'
     | '/devis'
+    | '/dossiers'
     | '/opportunites'
+    | '/opportunites-detectees'
+    | '/references'
     | '/reseaux-sociaux'
     | '/opportunites/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/appels-offres'
+    | '/calendrier-ao'
     | '/calendrier-editorial'
     | '/clients'
     | '/consultations'
     | '/devis'
+    | '/dossiers'
     | '/opportunites'
+    | '/opportunites-detectees'
+    | '/references'
     | '/reseaux-sociaux'
     | '/opportunites/$id'
   id:
     | '__root__'
     | '/'
+    | '/appels-offres'
+    | '/calendrier-ao'
     | '/calendrier-editorial'
     | '/clients'
     | '/consultations'
     | '/devis'
+    | '/dossiers'
     | '/opportunites'
+    | '/opportunites-detectees'
+    | '/references'
     | '/reseaux-sociaux'
     | '/opportunites/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppelsOffresRoute: typeof AppelsOffresRoute
+  CalendrierAoRoute: typeof CalendrierAoRoute
   CalendrierEditorialRoute: typeof CalendrierEditorialRoute
   ClientsRoute: typeof ClientsRoute
   ConsultationsRoute: typeof ConsultationsRoute
   DevisRoute: typeof DevisRoute
+  DossiersRoute: typeof DossiersRoute
   OpportunitesRoute: typeof OpportunitesRouteWithChildren
+  OpportunitesDetecteesRoute: typeof OpportunitesDetecteesRoute
+  ReferencesRoute: typeof ReferencesRoute
   ReseauxSociauxRoute: typeof ReseauxSociauxRoute
 }
 
@@ -140,6 +205,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/appels-offres': {
+      id: '/appels-offres'
+      path: '/appels-offres'
+      fullPath: '/appels-offres'
+      preLoaderRoute: typeof AppelsOffresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendrier-ao': {
+      id: '/calendrier-ao'
+      path: '/calendrier-ao'
+      fullPath: '/calendrier-ao'
+      preLoaderRoute: typeof CalendrierAoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendrier-editorial': {
@@ -170,11 +249,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dossiers': {
+      id: '/dossiers'
+      path: '/dossiers'
+      fullPath: '/dossiers'
+      preLoaderRoute: typeof DossiersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/opportunites': {
       id: '/opportunites'
       path: '/opportunites'
       fullPath: '/opportunites'
       preLoaderRoute: typeof OpportunitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/opportunites-detectees': {
+      id: '/opportunites-detectees'
+      path: '/opportunites-detectees'
+      fullPath: '/opportunites-detectees'
+      preLoaderRoute: typeof OpportunitesDetecteesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/references': {
+      id: '/references'
+      path: '/references'
+      fullPath: '/references'
+      preLoaderRoute: typeof ReferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reseaux-sociaux': {
@@ -208,11 +308,16 @@ const OpportunitesRouteWithChildren = OpportunitesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppelsOffresRoute: AppelsOffresRoute,
+  CalendrierAoRoute: CalendrierAoRoute,
   CalendrierEditorialRoute: CalendrierEditorialRoute,
   ClientsRoute: ClientsRoute,
   ConsultationsRoute: ConsultationsRoute,
   DevisRoute: DevisRoute,
+  DossiersRoute: DossiersRoute,
   OpportunitesRoute: OpportunitesRouteWithChildren,
+  OpportunitesDetecteesRoute: OpportunitesDetecteesRoute,
+  ReferencesRoute: ReferencesRoute,
   ReseauxSociauxRoute: ReseauxSociauxRoute,
 }
 export const routeTree = rootRouteImport

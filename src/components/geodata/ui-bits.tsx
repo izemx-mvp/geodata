@@ -201,14 +201,39 @@ export function ProgressBar({ value, className }: { value: number; className?: s
   );
 }
 
-export function EmptyState({ titre, description }: { titre: string; description?: string }) {
+export function EmptyState({
+  titre,
+  description,
+  action,
+}: {
+  titre: string;
+  description?: string;
+  action?: ReactNode;
+}) {
   return (
-    <div className="grid-surface rounded-lg border border-dashed border-border px-6 py-12 text-center">
+    <div className="topo-surface relative overflow-hidden rounded-xl border border-dashed border-border px-6 py-12 text-center">
+      <svg
+        aria-hidden
+        viewBox="0 0 120 60"
+        className="mx-auto mb-3 h-14 w-auto text-primary/50"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+      >
+        <path d="M2 46c14-10 24 4 38-6s22 10 36-2 24 4 42-8" />
+        <path d="M2 54c14-10 24 4 38-6s22 10 36-2 24 4 42-8" opacity="0.55" />
+        <circle cx="34" cy="22" r="2.4" fill="currentColor" stroke="none" />
+        <circle cx="70" cy="14" r="2.4" fill="currentColor" stroke="none" />
+        <circle cx="96" cy="26" r="2.4" fill="currentColor" stroke="none" />
+        <path d="M34 22 70 14 96 26" opacity="0.5" strokeDasharray="3 3" />
+      </svg>
       <p className="text-sm font-medium text-foreground">{titre}</p>
       {description ? <p className="mt-1 text-xs text-muted-foreground">{description}</p> : null}
+      {action ? <div className="mt-4 flex justify-center">{action}</div> : null}
     </div>
   );
 }
+
 
 export function Timeline({ items }: { items: { date: string; evenement: string }[] }) {
   return (

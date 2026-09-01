@@ -166,9 +166,9 @@ const AffairesIndexRoute = AffairesIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AffairesIdRoute = AffairesIdRouteImport.update({
-  id: '/affaires/$id',
-  path: '/affaires/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AffairesRoute,
 } as any)
 const AppelsOffresIndexRoute = AppelsOffresIndexRouteImport.update({
   id: '/appels-offres/',
@@ -176,9 +176,9 @@ const AppelsOffresIndexRoute = AppelsOffresIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppelsOffresIdRoute = AppelsOffresIdRouteImport.update({
-  id: '/appels-offres/$id',
-  path: '/appels-offres/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AppelsOffresRoute,
 } as any)
 const OpportunitesIndexRoute = OpportunitesIndexRouteImport.update({
   id: '/opportunites/',
@@ -186,9 +186,9 @@ const OpportunitesIndexRoute = OpportunitesIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
-  id: '/opportunites/$id',
-  path: '/opportunites/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => OpportunitesRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -412,9 +412,6 @@ export interface RootRouteChildren {
   RolesRoute: typeof RolesRoute
   UtilisateursRoute: typeof UtilisateursRoute
   ValidationRoute: typeof ValidationRoute
-  AffairesIdRoute: typeof AffairesIdRoute
-  AppelsOffresIdRoute: typeof AppelsOffresIdRoute
-  OpportunitesIdRoute: typeof OpportunitesIdRoute
   AffairesIndexRoute: typeof AffairesIndexRoute
   AppelsOffresIndexRoute: typeof AppelsOffresIndexRoute
   OpportunitesIndexRoute: typeof OpportunitesIndexRoute
@@ -599,10 +596,10 @@ declare module '@tanstack/react-router' {
     }
     '/affaires/$id': {
       id: '/affaires/$id'
-      path: '/affaires/$id'
+      path: '/$id'
       fullPath: '/affaires/$id'
       preLoaderRoute: typeof AffairesIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AffairesRoute
     }
     '/appels-offres/': {
       id: '/appels-offres/'
@@ -613,10 +610,10 @@ declare module '@tanstack/react-router' {
     }
     '/appels-offres/$id': {
       id: '/appels-offres/$id'
-      path: '/appels-offres/$id'
+      path: '/$id'
       fullPath: '/appels-offres/$id'
       preLoaderRoute: typeof AppelsOffresIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppelsOffresRoute
     }
     '/opportunites/': {
       id: '/opportunites/'
@@ -627,10 +624,10 @@ declare module '@tanstack/react-router' {
     }
     '/opportunites/$id': {
       id: '/opportunites/$id'
-      path: '/opportunites/$id'
+      path: '/$id'
       fullPath: '/opportunites/$id'
       preLoaderRoute: typeof OpportunitesIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof OpportunitesRoute
     }
   }
 }
@@ -660,9 +657,6 @@ const rootRouteChildren: RootRouteChildren = {
   RolesRoute: RolesRoute,
   UtilisateursRoute: UtilisateursRoute,
   ValidationRoute: ValidationRoute,
-  AffairesIdRoute: AffairesIdRoute,
-  AppelsOffresIdRoute: AppelsOffresIdRoute,
-  OpportunitesIdRoute: OpportunitesIdRoute,
   AffairesIndexRoute: AffairesIndexRoute,
   AppelsOffresIndexRoute: AppelsOffresIndexRoute,
   OpportunitesIndexRoute: OpportunitesIndexRoute,

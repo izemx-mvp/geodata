@@ -241,9 +241,23 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </ScrollArea>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label="Se déconnecter"
+              onClick={() => {
+                window.localStorage.removeItem("geodata-auth");
+                setAuthed(false);
+              }}
+            >
+              <LogOut className="size-4" />
+            </Button>
           </div>
         </header>
-        <main className="min-w-0 flex-1 px-5 py-6 lg:px-8">{children}</main>
+        <main key={pathname} className="page-reveal min-w-0 flex-1 px-5 py-6 lg:px-8">
+          {children}
+        </main>
+
       </div>
     </div>
   );

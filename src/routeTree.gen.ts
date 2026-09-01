@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CalendrierAoRouteImport } from './routes/calendrier-ao'
 import { Route as CalendrierEditorialRouteImport } from './routes/calendrier-editorial'
+import { Route as CommunityManagerRouteImport } from './routes/community-manager'
 import { Route as ConfigurationIaRouteImport } from './routes/configuration-ia'
 import { Route as DevisRouteImport } from './routes/devis'
 import { Route as DocumentsRouteImport } from './routes/documents'
@@ -45,6 +46,11 @@ const CalendrierAoRoute = CalendrierAoRouteImport.update({
 const CalendrierEditorialRoute = CalendrierEditorialRouteImport.update({
   id: '/calendrier-editorial',
   path: '/calendrier-editorial',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityManagerRoute = CommunityManagerRouteImport.update({
+  id: '/community-manager',
+  path: '/community-manager',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfigurationIaRoute = ConfigurationIaRouteImport.update({
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
+  '/community-manager': typeof CommunityManagerRoute
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
   '/documents': typeof DocumentsRoute
@@ -171,6 +178,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
+  '/community-manager': typeof CommunityManagerRoute
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
   '/documents': typeof DocumentsRoute
@@ -196,6 +204,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
+  '/community-manager': typeof CommunityManagerRoute
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
   '/documents': typeof DocumentsRoute
@@ -222,6 +231,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calendrier-ao'
     | '/calendrier-editorial'
+    | '/community-manager'
     | '/configuration-ia'
     | '/devis'
     | '/documents'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calendrier-ao'
     | '/calendrier-editorial'
+    | '/community-manager'
     | '/configuration-ia'
     | '/devis'
     | '/documents'
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/'
     | '/calendrier-ao'
     | '/calendrier-editorial'
+    | '/community-manager'
     | '/configuration-ia'
     | '/devis'
     | '/documents'
@@ -295,6 +307,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendrierAoRoute: typeof CalendrierAoRoute
   CalendrierEditorialRoute: typeof CalendrierEditorialRoute
+  CommunityManagerRoute: typeof CommunityManagerRoute
   ConfigurationIaRoute: typeof ConfigurationIaRoute
   DevisRoute: typeof DevisRoute
   DocumentsRoute: typeof DocumentsRoute
@@ -337,6 +350,13 @@ declare module '@tanstack/react-router' {
       path: '/calendrier-editorial'
       fullPath: '/calendrier-editorial'
       preLoaderRoute: typeof CalendrierEditorialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community-manager': {
+      id: '/community-manager'
+      path: '/community-manager'
+      fullPath: '/community-manager'
+      preLoaderRoute: typeof CommunityManagerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configuration-ia': {
@@ -479,6 +499,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendrierAoRoute: CalendrierAoRoute,
   CalendrierEditorialRoute: CalendrierEditorialRoute,
+  CommunityManagerRoute: CommunityManagerRoute,
   ConfigurationIaRoute: ConfigurationIaRoute,
   DevisRoute: DevisRoute,
   DocumentsRoute: DocumentsRoute,

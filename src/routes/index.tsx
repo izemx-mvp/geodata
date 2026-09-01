@@ -155,7 +155,7 @@ function VueGlobale() {
                 `${state.taches.filter((t) => t.statut === "En attente de validation").length} tâches terrain terminées`,
                 `Validation ${userById(a.chefDeProjetId)?.nom} requise`,
               ]}
-              to="/validation"
+              to="/affaires"
             />
           ))}
           {livraisons.slice(0, 1).map((c) => (
@@ -164,7 +164,7 @@ function VueGlobale() {
               tag="LIVRAISON"
               titre={c.designation}
               lignes={["Contrôle administration en attente", `Réf. ${c.reference}`]}
-              to="/livraisons"
+              to="/affaires"
             />
           ))}
         </div>

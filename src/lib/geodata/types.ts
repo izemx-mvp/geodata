@@ -134,6 +134,7 @@ export interface Opportunite {
   documents: DocFile[];
   interactions: Interaction[];
   affaireId?: string;
+  tachesCommerciales?: { id: string; libelle: string; echeance: string; fait: boolean }[];
   createdAt: string;
 }
 

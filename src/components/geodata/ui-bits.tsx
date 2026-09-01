@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function PageHeader({
   titre,
@@ -12,7 +12,8 @@ export function PageHeader({
 }) {
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-5">
-      <div>
+      <div className="relative pl-4">
+        <span className="absolute top-1 bottom-1 left-0 w-[3px] rounded-full bg-primary" />
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">{titre}</h1>
         {sousTitre ? <p className="mt-1 text-sm text-muted-foreground">{sousTitre}</p> : null}
       </div>
@@ -20,6 +21,34 @@ export function PageHeader({
     </div>
   );
 }
+
+/** Counts up to a numeric value; renders strings as-is. */
+function useCountUp(value: number | string) {
+  const [display, setDisplay] = useState<number | string>(typeof value === "number" ? 0 : value);
+  const raf = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (typeof value !== "number") {
+      setDisplay(value);
+      return;
+    }
+    const start = performance.now();
+    const duration = 700;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplay(Math.round(value * eased));
+      if (p < 1) raf.current = requestAnimationFrame(tick);
+    };
+    raf.current = requestAnimationFrame(tick);
+    return () => {
+      if (raf.current) cancelAnimationFrame(raf.current);
+    };
+  }, [value]);
+
+  return display;
+}
+
 
 const TONE: Record<string, string> = {
   neutre: "bg-secondary text-secondary-foreground border-border",
@@ -87,28 +116,39 @@ export function KpiCard({
 }) {
   const accents: Record<string, string> = {
     neutre: "border-border",
-    orange: "border-primary/30 bg-accent/40",
+    orange: "border-primary/35 bg-accent/40",
     rouge: "border-destructive/30 bg-destructive/5",
     vert: "border-success/30 bg-success/5",
   };
+  const affiche = useCountUp(value);
   return (
     <button
       type="button"
       onClick={onClick}
       className={cn(
-        "card-elev group flex flex-col items-start rounded-xl border bg-card p-4 text-left transition-all hover:-translate-y-0.5 hover:border-primary/50",
+        "surface-card hover-lift group relative flex flex-col items-start overflow-hidden p-4 text-left",
         accents[tone],
       )}
     >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -top-10 -right-10 size-24 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background: "radial-gradient(circle, var(--brand) 0%, transparent 68%)", opacity: 0.12 }}
+      />
       <div className="flex w-full items-center justify-between">
         <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{label}</span>
-        {icon ? <span className="text-primary">{icon}</span> : null}
+        {icon ? (
+          <span className="grid size-8 place-items-center rounded-md border border-primary/25 bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+            {icon}
+          </span>
+        ) : null}
       </div>
-      <span className="mt-2 text-3xl font-semibold tabular-nums text-foreground">{value}</span>
+      <span className="mt-2 text-3xl font-semibold tabular-nums text-foreground">{affiche}</span>
       {hint ? <span className="mt-1 text-xs text-muted-foreground">{hint}</span> : null}
     </button>
   );
 }
+
 
 export function SectionCard({
   titre,
@@ -124,16 +164,18 @@ export function SectionCard({
   className?: string;
 }) {
   return (
-    <section className={cn("card-elev rounded-xl border border-border bg-card", className)}>
+    <section className={cn("surface-card", className)}>
       {titre ? (
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-3.5">
-          <div>
+          <div className="relative pl-3">
+            <span className="absolute top-0.5 bottom-0.5 left-0 w-[2px] rounded-full bg-primary/70" />
             <h2 className="text-sm font-semibold tracking-wide text-foreground uppercase">{titre}</h2>
             {description ? <p className="mt-0.5 text-xs text-muted-foreground">{description}</p> : null}
           </div>
           {actions ? <div className="flex items-center gap-2">{actions}</div> : null}
         </header>
       ) : null}
+
       <div className="p-5">{children}</div>
     </section>
   );
@@ -159,14 +201,39 @@ export function ProgressBar({ value, className }: { value: number; className?: s
   );
 }
 
-export function EmptyState({ titre, description }: { titre: string; description?: string }) {
+export function EmptyState({
+  titre,
+  description,
+  action,
+}: {
+  titre: string;
+  description?: string;
+  action?: ReactNode;
+}) {
   return (
-    <div className="grid-surface rounded-lg border border-dashed border-border px-6 py-12 text-center">
+    <div className="topo-surface relative overflow-hidden rounded-xl border border-dashed border-border px-6 py-12 text-center">
+      <svg
+        aria-hidden
+        viewBox="0 0 120 60"
+        className="mx-auto mb-3 h-14 w-auto text-primary/50"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+      >
+        <path d="M2 46c14-10 24 4 38-6s22 10 36-2 24 4 42-8" />
+        <path d="M2 54c14-10 24 4 38-6s22 10 36-2 24 4 42-8" opacity="0.55" />
+        <circle cx="34" cy="22" r="2.4" fill="currentColor" stroke="none" />
+        <circle cx="70" cy="14" r="2.4" fill="currentColor" stroke="none" />
+        <circle cx="96" cy="26" r="2.4" fill="currentColor" stroke="none" />
+        <path d="M34 22 70 14 96 26" opacity="0.5" strokeDasharray="3 3" />
+      </svg>
       <p className="text-sm font-medium text-foreground">{titre}</p>
       {description ? <p className="mt-1 text-xs text-muted-foreground">{description}</p> : null}
+      {action ? <div className="mt-4 flex justify-center">{action}</div> : null}
     </div>
   );
 }
+
 
 export function Timeline({ items }: { items: { date: string; evenement: string }[] }) {
   return (

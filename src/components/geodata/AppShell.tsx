@@ -16,6 +16,7 @@ import {
   LayoutGrid,
   Library,
   ListChecks,
+  LogOut,
   MessageSquareShare,
   PackageCheck,
   Radar,
@@ -28,7 +29,10 @@ import {
   UsersRound,
   Route as Route2,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { BrandLogo } from "./BrandLogo";
+import { LoginScreen } from "./LoginScreen";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -110,14 +114,8 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
 
 function Logo() {
   return (
-    <Link to="/" className="flex items-center gap-2.5 px-4 py-5">
-      <span className="grid size-9 place-items-center rounded-lg bg-primary text-primary-foreground">
-        <LayoutGrid className="size-5" />
-      </span>
-      <span className="leading-tight">
-        <span className="block text-base font-bold tracking-[0.18em] text-sidebar-foreground">GEODATA</span>
-        <span className="block text-[10px] tracking-wide text-sidebar-foreground/60 uppercase">Plateforme IA</span>
-      </span>
+    <Link to="/" className="flex items-center gap-3 px-4 py-5">
+      <BrandLogo className="h-10" />
     </Link>
   );
 }
@@ -126,12 +124,35 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { currentUser, setCurrentUserId, state, can } = useGeo();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const nonLues = state.notifications.filter((n) => !n.lue).length;
+  const [authed, setAuthed] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    setAuthed(window.localStorage.getItem("geodata-auth") === "ok");
+  }, []);
+
+  if (authed === null) {
+    return <div className="min-h-screen bg-anthracite" />;
+  }
+
+  if (!authed) {
+    return (
+      <LoginScreen
+        onSuccess={() => {
+          window.localStorage.setItem("geodata-auth", "ok");
+          setAuthed(true);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
+      <aside className="relative sticky top-0 hidden h-screen w-64 shrink-0 flex-col overflow-hidden border-r border-sidebar-border bg-sidebar lg:flex">
+        <div className="pointer-events-none absolute inset-0 opacity-30 geo-grid-live" />
         <Logo />
-        <ScrollArea className="flex-1">
+        <ScrollArea className="relative flex-1">
+
+
           <nav className="space-y-5 px-3 pb-8">
             {NAV.map((groupe) => {
               const items = groupe.items.filter((i) => can(i.section) || can("*"));
@@ -174,8 +195,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-border bg-card/85 px-5 backdrop-blur">
           <div className="flex items-center gap-3 lg:hidden">
-            <span className="text-sm font-bold tracking-[0.18em] text-foreground">GEODATA</span>
+            <BrandLogo variant="dark" className="h-7" />
           </div>
+
           <div className="hidden items-center gap-2 text-xs text-muted-foreground lg:flex">
             <span className="inline-flex size-1.5 rounded-full bg-success" />
             3 agents IA actifs — Commercial · Appels d'offres · Projets
@@ -220,9 +242,23 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </ScrollArea>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label="Se déconnecter"
+              onClick={() => {
+                window.localStorage.removeItem("geodata-auth");
+                setAuthed(false);
+              }}
+            >
+              <LogOut className="size-4" />
+            </Button>
           </div>
         </header>
-        <main className="min-w-0 flex-1 px-5 py-6 lg:px-8">{children}</main>
+        <main key={pathname} className="page-reveal min-w-0 flex-1 px-5 py-6 lg:px-8">
+          {children}
+        </main>
+
       </div>
     </div>
   );

@@ -260,7 +260,7 @@ export function GeoProvider({ children }: { children: ReactNode }) {
               message: `Rejet ${rejet.ref} enregistré – ${rejet.motif}.`,
               date: rejet.date,
               lue: false,
-              lien: "/rejets",
+              lien: "/affaires",
             },
             ...s.notifications,
           ],

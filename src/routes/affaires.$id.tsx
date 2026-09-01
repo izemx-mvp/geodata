@@ -185,7 +185,7 @@ function AffaireDetail() {
                   <SelectContent>{[0, 25, 50, 75, 100].map((p) => (<SelectItem key={p} value={String(p)}>{p}%</SelectItem>))}</SelectContent>
                 </Select>
                 <Button size="sm" variant="outline" onClick={() => toast.success("Livrable téléversé (démo)")}>Ajouter un livrable</Button>
-                <Button size="sm" variant="outline" onClick={() => { updateTache(t.id, { statut: "En attente de validation", progression: 100 }); notify({ type: "Validation", message: `Tâche « ${t.libelle} » soumise à validation.`, lien: "/validation" }); toast.success("Tâche envoyée en validation"); }}>
+                <Button size="sm" variant="outline" onClick={() => { updateTache(t.id, { statut: "En attente de validation", progression: 100 }); notify({ type: "Validation", message: `Tâche « ${t.libelle} » soumise à validation.`, lien: "/affaires" }); toast.success("Tâche envoyée en validation"); }}>
                   <Send className="size-4" /> Soumettre
                 </Button>
               </div>
@@ -199,7 +199,7 @@ function AffaireDetail() {
               <p className="text-sm text-muted-foreground">Réalisée par {userById(t.responsableId)?.nom}. Contrôle qualité du chef de projet requis.</p>
               <div className="mt-3 flex gap-2">
                 <Button size="sm" onClick={() => { updateTache(t.id, { statut: "Validée" }); toast.success("Tâche validée"); }}><CheckCircle2 className="size-4" /> Valider</Button>
-                <Button size="sm" variant="outline" onClick={() => { updateTache(t.id, { statut: "Correction demandée", progression: 75 }); notify({ type: "Rejet", message: `Correction demandée sur « ${t.libelle} ».`, lien: "/execution" }); toast("Correction demandée"); }}>Demander une correction</Button>
+                <Button size="sm" variant="outline" onClick={() => { updateTache(t.id, { statut: "Correction demandée", progression: 75 }); notify({ type: "Rejet", message: `Correction demandée sur « ${t.libelle} ».`, lien: "/affaires" }); toast("Correction demandée"); }}>Demander une correction</Button>
               </div>
             </SectionCard>
           ))}

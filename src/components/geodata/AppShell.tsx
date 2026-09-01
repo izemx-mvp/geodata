@@ -194,8 +194,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b border-border bg-card/85 px-5 backdrop-blur">
           <div className="flex items-center gap-3 lg:hidden">
-            <span className="text-sm font-bold tracking-[0.18em] text-foreground">GEODATA</span>
+            <BrandLogo variant="dark" className="h-7" />
           </div>
+
           <div className="hidden items-center gap-2 text-xs text-muted-foreground lg:flex">
             <span className="inline-flex size-1.5 rounded-full bg-success" />
             3 agents IA actifs — Commercial · Appels d'offres · Projets

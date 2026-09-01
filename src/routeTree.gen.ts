@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CalendrierAoRouteImport } from './routes/calendrier-ao'
 import { Route as CalendrierEditorialRouteImport } from './routes/calendrier-editorial'
-import { Route as ClientsRouteImport } from './routes/clients'
 import { Route as ConfigurationIaRouteImport } from './routes/configuration-ia'
 import { Route as DevisRouteImport } from './routes/devis'
 import { Route as DocumentsRouteImport } from './routes/documents'
@@ -28,6 +27,7 @@ import { Route as AffairesIndexRouteImport } from './routes/affaires.index'
 import { Route as AffairesIdRouteImport } from './routes/affaires.$id'
 import { Route as AppelsOffresIndexRouteImport } from './routes/appels-offres.index'
 import { Route as AppelsOffresIdRouteImport } from './routes/appels-offres.$id'
+import { Route as ClientsIndexRouteImport } from './routes/clients.index'
 import { Route as ClientsIdRouteImport } from './routes/clients.$id'
 import { Route as OpportunitesIndexRouteImport } from './routes/opportunites.index'
 import { Route as OpportunitesIdRouteImport } from './routes/opportunites.$id'
@@ -45,11 +45,6 @@ const CalendrierAoRoute = CalendrierAoRouteImport.update({
 const CalendrierEditorialRoute = CalendrierEditorialRouteImport.update({
   id: '/calendrier-editorial',
   path: '/calendrier-editorial',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ClientsRoute = ClientsRouteImport.update({
-  id: '/clients',
-  path: '/clients',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfigurationIaRoute = ConfigurationIaRouteImport.update({
@@ -127,10 +122,15 @@ const AppelsOffresIdRoute = AppelsOffresIdRouteImport.update({
   path: '/appels-offres/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClientsIndexRoute = ClientsIndexRouteImport.update({
+  id: '/clients/',
+  path: '/clients/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClientsIdRoute = ClientsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => ClientsRoute,
+  id: '/clients/$id',
+  path: '/clients/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const OpportunitesIndexRoute = OpportunitesIndexRouteImport.update({
   id: '/opportunites/',
@@ -147,7 +147,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
-  '/clients': typeof ClientsRouteWithChildren
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
   '/documents': typeof DocumentsRoute
@@ -165,13 +164,13 @@ export interface FileRoutesByFullPath {
   '/opportunites/$id': typeof OpportunitesIdRoute
   '/affaires/': typeof AffairesIndexRoute
   '/appels-offres/': typeof AppelsOffresIndexRoute
+  '/clients/': typeof ClientsIndexRoute
   '/opportunites/': typeof OpportunitesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
-  '/clients': typeof ClientsRouteWithChildren
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
   '/documents': typeof DocumentsRoute
@@ -189,6 +188,7 @@ export interface FileRoutesByTo {
   '/opportunites/$id': typeof OpportunitesIdRoute
   '/affaires': typeof AffairesIndexRoute
   '/appels-offres': typeof AppelsOffresIndexRoute
+  '/clients': typeof ClientsIndexRoute
   '/opportunites': typeof OpportunitesIndexRoute
 }
 export interface FileRoutesById {
@@ -196,7 +196,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
-  '/clients': typeof ClientsRouteWithChildren
   '/configuration-ia': typeof ConfigurationIaRoute
   '/devis': typeof DevisRoute
   '/documents': typeof DocumentsRoute
@@ -214,6 +213,7 @@ export interface FileRoutesById {
   '/opportunites/$id': typeof OpportunitesIdRoute
   '/affaires/': typeof AffairesIndexRoute
   '/appels-offres/': typeof AppelsOffresIndexRoute
+  '/clients/': typeof ClientsIndexRoute
   '/opportunites/': typeof OpportunitesIndexRoute
 }
 export interface FileRouteTypes {
@@ -222,7 +222,6 @@ export interface FileRouteTypes {
     | '/'
     | '/calendrier-ao'
     | '/calendrier-editorial'
-    | '/clients'
     | '/configuration-ia'
     | '/devis'
     | '/documents'
@@ -240,13 +239,13 @@ export interface FileRouteTypes {
     | '/opportunites/$id'
     | '/affaires/'
     | '/appels-offres/'
+    | '/clients/'
     | '/opportunites/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/calendrier-ao'
     | '/calendrier-editorial'
-    | '/clients'
     | '/configuration-ia'
     | '/devis'
     | '/documents'
@@ -264,13 +263,13 @@ export interface FileRouteTypes {
     | '/opportunites/$id'
     | '/affaires'
     | '/appels-offres'
+    | '/clients'
     | '/opportunites'
   id:
     | '__root__'
     | '/'
     | '/calendrier-ao'
     | '/calendrier-editorial'
-    | '/clients'
     | '/configuration-ia'
     | '/devis'
     | '/documents'
@@ -288,6 +287,7 @@ export interface FileRouteTypes {
     | '/opportunites/$id'
     | '/affaires/'
     | '/appels-offres/'
+    | '/clients/'
     | '/opportunites/'
   fileRoutesById: FileRoutesById
 }
@@ -295,7 +295,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalendrierAoRoute: typeof CalendrierAoRoute
   CalendrierEditorialRoute: typeof CalendrierEditorialRoute
-  ClientsRoute: typeof ClientsRouteWithChildren
   ConfigurationIaRoute: typeof ConfigurationIaRoute
   DevisRoute: typeof DevisRoute
   DocumentsRoute: typeof DocumentsRoute
@@ -309,9 +308,11 @@ export interface RootRouteChildren {
   UtilisateursRoute: typeof UtilisateursRoute
   AffairesIdRoute: typeof AffairesIdRoute
   AppelsOffresIdRoute: typeof AppelsOffresIdRoute
+  ClientsIdRoute: typeof ClientsIdRoute
   OpportunitesIdRoute: typeof OpportunitesIdRoute
   AffairesIndexRoute: typeof AffairesIndexRoute
   AppelsOffresIndexRoute: typeof AppelsOffresIndexRoute
+  ClientsIndexRoute: typeof ClientsIndexRoute
   OpportunitesIndexRoute: typeof OpportunitesIndexRoute
 }
 
@@ -336,13 +337,6 @@ declare module '@tanstack/react-router' {
       path: '/calendrier-editorial'
       fullPath: '/calendrier-editorial'
       preLoaderRoute: typeof CalendrierEditorialRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/clients': {
-      id: '/clients'
-      path: '/clients'
-      fullPath: '/clients'
-      preLoaderRoute: typeof ClientsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configuration-ia': {
@@ -450,12 +444,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppelsOffresIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clients/': {
+      id: '/clients/'
+      path: '/clients'
+      fullPath: '/clients/'
+      preLoaderRoute: typeof ClientsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/clients/$id': {
       id: '/clients/$id'
-      path: '/$id'
+      path: '/clients/$id'
       fullPath: '/clients/$id'
       preLoaderRoute: typeof ClientsIdRouteImport
-      parentRoute: typeof ClientsRoute
+      parentRoute: typeof rootRouteImport
     }
     '/opportunites/': {
       id: '/opportunites/'
@@ -474,22 +475,10 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface ClientsRouteChildren {
-  ClientsIdRoute: typeof ClientsIdRoute
-}
-
-const ClientsRouteChildren: ClientsRouteChildren = {
-  ClientsIdRoute: ClientsIdRoute,
-}
-
-const ClientsRouteWithChildren =
-  ClientsRoute._addFileChildren(ClientsRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalendrierAoRoute: CalendrierAoRoute,
   CalendrierEditorialRoute: CalendrierEditorialRoute,
-  ClientsRoute: ClientsRouteWithChildren,
   ConfigurationIaRoute: ConfigurationIaRoute,
   DevisRoute: DevisRoute,
   DocumentsRoute: DocumentsRoute,
@@ -503,9 +492,11 @@ const rootRouteChildren: RootRouteChildren = {
   UtilisateursRoute: UtilisateursRoute,
   AffairesIdRoute: AffairesIdRoute,
   AppelsOffresIdRoute: AppelsOffresIdRoute,
+  ClientsIdRoute: ClientsIdRoute,
   OpportunitesIdRoute: OpportunitesIdRoute,
   AffairesIndexRoute: AffairesIndexRoute,
   AppelsOffresIndexRoute: AppelsOffresIndexRoute,
+  ClientsIndexRoute: ClientsIndexRoute,
   OpportunitesIndexRoute: OpportunitesIndexRoute,
 }
 export const routeTree = rootRouteImport

@@ -62,9 +62,8 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
   {
     groupe: "Commercial",
     items: [
-      { to: "/opportunites", label: "Opportunités", icon: <Target className="size-4" />, section: "commercial" },
+      { to: "/opportunites", label: "Workflow commercial", icon: <Target className="size-4" />, section: "commercial" },
       { to: "/clients", label: "Prospects & Clients", icon: <Building2 className="size-4" />, section: "commercial" },
-      { to: "/consultations", label: "Consultations", icon: <MessageSquareShare className="size-4" />, section: "commercial" },
       { to: "/devis", label: "Devis", icon: <FileSpreadsheet className="size-4" />, section: "commercial" },
       { to: "/reseaux-sociaux", label: "Réseaux sociaux", icon: <Share2 className="size-4" />, section: "social" },
       { to: "/calendrier-editorial", label: "Calendrier éditorial", icon: <CalendarDays className="size-4" />, section: "social" },
@@ -82,16 +81,7 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
   },
   {
     groupe: "Projets",
-    items: [
-      { to: "/affaires", label: "Affaires", icon: <Boxes className="size-4" />, section: "projets" },
-      { to: "/commandes", label: "Commandes", icon: <PackageCheck className="size-4" />, section: "projets" },
-      { to: "/commandes-internes", label: "Commandes internes", icon: <ListChecks className="size-4" />, section: "projets" },
-      { to: "/planning", label: "Planning", icon: <CalendarDays className="size-4" />, section: "projets" },
-      { to: "/execution", label: "Exécution", icon: <Hammer className="size-4" />, section: "execution" },
-      { to: "/validation", label: "Validation", icon: <CheckCircle2 className="size-4" />, section: "projets" },
-      { to: "/livraisons", label: "Livraisons", icon: <Truck className="size-4" />, section: "projets" },
-      { to: "/rejets", label: "Rejets", icon: <RotateCcw className="size-4" />, section: "projets" },
-    ],
+    items: [{ to: "/affaires", label: "Affaires", icon: <Boxes className="size-4" />, section: "projets" }],
   },
   {
     groupe: "Ressources",
@@ -99,7 +89,6 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
       { to: "/equipes", label: "Équipes", icon: <UsersRound className="size-4" />, section: "ressources" },
       { to: "/documents", label: "Documents", icon: <FileText className="size-4" />, section: "ressources" },
       { to: "/notifications", label: "Notifications", icon: <Bell className="size-4" />, section: "ressources" },
-      { to: "/parcours", label: "Parcours démo", icon: <Route2 className="size-4" />, section: "global" },
     ],
   },
   {
@@ -111,6 +100,7 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
     ],
   },
 ];
+
 
 function Logo() {
   return (

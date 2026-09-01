@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { CalendarClock, Eye, FileSpreadsheet, History as HistoryIcon, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { DevisWizard } from "@/components/geodata/DevisWizard";
 import { PageHeader, SectionCard, StatusBadge } from "@/components/geodata/ui-bits";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -10,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { fmtMAD, useGeo } from "@/lib/geodata/store";
 
-export const Route = createFileRoute("/clients")({
+export const Route = createFileRoute("/clients/")({
   head: () => ({
     meta: [
       { title: "Prospects & Clients — GEODATA" },
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/clients")({
 });
 
 function ClientsPage() {
-  const { state, setState } = useGeo();
+  const { state, setState, updateOpportunite } = useGeo();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -96,14 +97,18 @@ function ClientsPage() {
                 <TableHead>Contact</TableHead>
                 <TableHead>CA historique</TableHead>
                 <TableHead>Opportunités</TableHead>
+                <TableHead className="text-right">Actions rapides</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {list.map((c) => {
                 const opps = state.opportunites.filter((o) => o.clientId === c.id);
+                const oppDevis = opps.find((o) => !["Gagné", "Perdu"].includes(o.stage)) ?? opps[0];
                 return (
                   <TableRow key={c.id}>
-                    <TableCell className="font-medium">{c.nom}</TableCell>
+                    <TableCell className="font-medium">
+                      <Link to="/clients/$id" params={{ id: c.id }} className="hover:text-primary">{c.nom}</Link>
+                    </TableCell>
                     <TableCell><StatusBadge statut={c.type} tone="neutre" /></TableCell>
                     <TableCell>{c.secteur}</TableCell>
                     <TableCell>{c.ville}</TableCell>
@@ -114,10 +119,44 @@ function ClientsPage() {
                     <TableCell className="tabular-nums">{fmtMAD(c.ca)}</TableCell>
                     <TableCell>
                       {opps.length ? (
-                        <Link to="/opportunites" className="text-sm text-primary hover:underline">{opps.length} en cours</Link>
+                        <Link to="/clients/$id" params={{ id: c.id }} className="text-sm text-primary hover:underline">{opps.length} en cours</Link>
                       ) : (
                         <span className="text-xs text-muted-foreground">—</span>
                       )}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap justify-end gap-1">
+                        <Button asChild size="sm" variant="ghost" title="Voir la fiche">
+                          <Link to="/clients/$id" params={{ id: c.id }}><Eye className="size-4" /></Link>
+                        </Button>
+                        {oppDevis ? (
+                          <DevisWizard
+                            opp={oppDevis}
+                            trigger={<Button size="sm" variant="ghost" title="Générer un devis"><FileSpreadsheet className="size-4" /></Button>}
+                          />
+                        ) : null}
+                        <Button asChild size="sm" variant="ghost" title="Ajouter une opportunité">
+                          <Link to="/opportunites"><Plus className="size-4" /></Link>
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          title="Planifier une relance"
+                          onClick={() => {
+                            if (!oppDevis) {
+                              toast("Aucune opportunité active à relancer");
+                              return;
+                            }
+                            updateOpportunite(oppDevis.id, { stage: "Relance", prochaineAction: `Relance commerciale de ${c.contact}` });
+                            toast.success(`Relance planifiée pour ${c.nom}`);
+                          }}
+                        >
+                          <CalendarClock className="size-4" />
+                        </Button>
+                        <Button asChild size="sm" variant="ghost" title="Voir l'historique">
+                          <Link to="/clients/$id" params={{ id: c.id }}><HistoryIcon className="size-4" /></Link>
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 );
@@ -129,3 +168,4 @@ function ClientsPage() {
     </div>
   );
 }
+

@@ -99,7 +99,7 @@ function VueGlobale() {
       </div>
 
       <Link
-        to="/parcours"
+        to="/affaires"
         className="card-elev flex flex-wrap items-center justify-between gap-4 rounded-xl border border-primary/40 bg-accent/60 px-6 py-5 transition-colors hover:bg-accent"
       >
         <div className="flex items-center gap-3">
@@ -107,16 +107,17 @@ function VueGlobale() {
             <RouteIcon className="size-5" />
           </span>
           <div>
-            <p className="text-sm font-semibold text-foreground">Voir le parcours complet d'une affaire</p>
+            <p className="text-sm font-semibold text-foreground">Suivre le workflow complet d'une affaire</p>
             <p className="text-xs text-muted-foreground">
               Opportunité → Offre → Validation → Affaire → Commande → Planification → Exécution → Livraison → Facturation
             </p>
           </div>
         </div>
         <span className="inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-          Démarrer la démonstration <ArrowRight className="size-4" />
+          Ouvrir les affaires <ArrowRight className="size-4" />
         </span>
       </Link>
+
 
       <SectionCard titre="À traiter aujourd'hui" description="Actions prioritaires détectées par les agents IA">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -154,7 +155,7 @@ function VueGlobale() {
                 `${state.taches.filter((t) => t.statut === "En attente de validation").length} tâches terrain terminées`,
                 `Validation ${userById(a.chefDeProjetId)?.nom} requise`,
               ]}
-              to="/validation"
+              to="/affaires"
             />
           ))}
           {livraisons.slice(0, 1).map((c) => (
@@ -163,7 +164,7 @@ function VueGlobale() {
               tag="LIVRAISON"
               titre={c.designation}
               lignes={["Contrôle administration en attente", `Réf. ${c.reference}`]}
-              to="/livraisons"
+              to="/affaires"
             />
           ))}
         </div>

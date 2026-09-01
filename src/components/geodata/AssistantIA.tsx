@@ -93,7 +93,7 @@ export function AssistantIA({ contexte }: { contexte?: string }) {
       setReponse({
         titre: `${enAttente.length} tâche(s) en attente de validation`,
         corps: enAttente.slice(0, 8).map((t) => `${t.libelle} — ${userById(t.responsableId)?.nom} · 100%`),
-        liens: [{ label: "Ouvrir les validations", to: "/validation" }],
+        liens: [{ label: "Ouvrir les validations", to: "/affaires" }],
       });
       return;
     }

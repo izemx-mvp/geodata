@@ -2,7 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2, Download, FileText, Plus, Send, ShieldAlert, Truck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { AssistantIA } from "@/components/geodata/AssistantIA";
 import { Field, PageHeader, ProgressBar, SectionCard, StatusBadge, Timeline } from "@/components/geodata/ui-bits";
+import { WorkflowAffaire, calculerWorkflow } from "@/components/geodata/WorkflowAffaire";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -45,6 +47,11 @@ function AffaireDetail() {
   const taches = state.taches.filter((t) => cis.some((ci) => ci.id === t.commandeInterneId));
   const rejets = state.rejets.filter((r) => cis.some((ci) => ci.id === r.commandeInterneId));
 
+  const etapes = calculerWorkflow({ affaire, commandes, cis, taches, rejets });
+  const livrablesDocs = taches.flatMap((t) => t.livrables);
+  const historique = [...cis.flatMap((ci) => ci.historique.map((h) => ({ ...h, evenement: `${ci.reference} — ${h.evenement}` })))]
+    .sort((a, b) => b.date.localeCompare(a.date));
+
   function histo(ci: CommandeInterne, evenement: string, patch: Partial<CommandeInterne> = {}) {
     updateCi(ci.id, { ...patch, historique: [...ci.historique, { date: new Date().toISOString().slice(0, 10), evenement }] });
     toast.success(evenement);
@@ -73,14 +80,79 @@ function AffaireDetail() {
       <Tabs defaultValue="resume">
         <TabsList className="flex-wrap">
           <TabsTrigger value="resume">Résumé</TabsTrigger>
+          <TabsTrigger value="workflow">Workflow</TabsTrigger>
           <TabsTrigger value="commandes">Commandes</TabsTrigger>
           <TabsTrigger value="internes">Commandes internes</TabsTrigger>
-          <TabsTrigger value="planning">Planning</TabsTrigger>
+          <TabsTrigger value="planning">Planification</TabsTrigger>
           <TabsTrigger value="execution">Exécution</TabsTrigger>
           <TabsTrigger value="validation">Validation</TabsTrigger>
-          <TabsTrigger value="livraison">Livraison</TabsTrigger>
+          <TabsTrigger value="livraison">Livraisons</TabsTrigger>
           <TabsTrigger value="rejets">Rejets</TabsTrigger>
+          <TabsTrigger value="documents">Documents</TabsTrigger>
+          <TabsTrigger value="historique">Historique</TabsTrigger>
+          <TabsTrigger value="ia">Assistant IA</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="workflow" className="mt-4 space-y-4">
+          <SectionCard titre="Workflow de l'affaire" description="Affaire → Commande → Commande interne → Planification → Exécution → Validation → Livraison interne → Contrôle → Livraison client → Prêt à facturer">
+            <div className="overflow-x-auto pb-2">
+              <WorkflowAffaire etapes={etapes} rejets={rejets} />
+            </div>
+          </SectionCard>
+          <SectionCard titre="Avancement par commande interne">
+            <div className="space-y-3">
+              {cis.map((ci) => (
+                <div key={ci.id} className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border p-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-foreground">{ci.reference} — {ci.designation}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Chef de projet {userById(ci.chefDeProjetId)?.nom} · échéance {fmtDate(ci.dateLimite)}
+                    </p>
+                  </div>
+                  <StatusBadge statut={ci.statut} />
+                </div>
+              ))}
+              {!cis.length ? <p className="text-sm text-muted-foreground">Aucune commande interne créée.</p> : null}
+            </div>
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="documents" className="mt-4">
+          <SectionCard titre="Documents et livrables de l'affaire">
+            {livrablesDocs.length ? (
+              <ul className="divide-y divide-border">
+                {livrablesDocs.map((d) => (
+                  <li key={d.id} className="flex items-center justify-between py-2.5">
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-medium">{d.nom}</span>
+                      <span className="block text-xs text-muted-foreground">{d.type} · {d.taille} · {fmtDate(d.date)}</span>
+                    </span>
+                    <Button size="sm" variant="ghost" onClick={() => toast.success("Document téléchargé (démo)")}>
+                      <Download className="size-4" /> Télécharger
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Livrables attendus : {affaire.livrables.join(", ")}. Aucun fichier déposé pour le moment.
+              </p>
+            )}
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="historique" className="mt-4">
+          <SectionCard titre="Historique complet de l'affaire">
+            <Timeline items={historique} />
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="ia" className="mt-4">
+          <SectionCard titre="Assistant IA projet" description={`Analyse de l'affaire ${affaire.reference}`}>
+            <AssistantIA contexte={affaire.reference} />
+          </SectionCard>
+        </TabsContent>
+
 
         <TabsContent value="resume" className="mt-4 grid gap-4 lg:grid-cols-3">
           <SectionCard titre="Informations de l'affaire" className="lg:col-span-2">
@@ -185,7 +257,7 @@ function AffaireDetail() {
                   <SelectContent>{[0, 25, 50, 75, 100].map((p) => (<SelectItem key={p} value={String(p)}>{p}%</SelectItem>))}</SelectContent>
                 </Select>
                 <Button size="sm" variant="outline" onClick={() => toast.success("Livrable téléversé (démo)")}>Ajouter un livrable</Button>
-                <Button size="sm" variant="outline" onClick={() => { updateTache(t.id, { statut: "En attente de validation", progression: 100 }); notify({ type: "Validation", message: `Tâche « ${t.libelle} » soumise à validation.`, lien: "/validation" }); toast.success("Tâche envoyée en validation"); }}>
+                <Button size="sm" variant="outline" onClick={() => { updateTache(t.id, { statut: "En attente de validation", progression: 100 }); notify({ type: "Validation", message: `Tâche « ${t.libelle} » soumise à validation.`, lien: "/affaires" }); toast.success("Tâche envoyée en validation"); }}>
                   <Send className="size-4" /> Soumettre
                 </Button>
               </div>
@@ -199,7 +271,7 @@ function AffaireDetail() {
               <p className="text-sm text-muted-foreground">Réalisée par {userById(t.responsableId)?.nom}. Contrôle qualité du chef de projet requis.</p>
               <div className="mt-3 flex gap-2">
                 <Button size="sm" onClick={() => { updateTache(t.id, { statut: "Validée" }); toast.success("Tâche validée"); }}><CheckCircle2 className="size-4" /> Valider</Button>
-                <Button size="sm" variant="outline" onClick={() => { updateTache(t.id, { statut: "Correction demandée", progression: 75 }); notify({ type: "Rejet", message: `Correction demandée sur « ${t.libelle} ».`, lien: "/execution" }); toast("Correction demandée"); }}>Demander une correction</Button>
+                <Button size="sm" variant="outline" onClick={() => { updateTache(t.id, { statut: "Correction demandée", progression: 75 }); notify({ type: "Rejet", message: `Correction demandée sur « ${t.libelle} ».`, lien: "/affaires" }); toast("Correction demandée"); }}>Demander une correction</Button>
               </div>
             </SectionCard>
           ))}

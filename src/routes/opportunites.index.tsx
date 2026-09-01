@@ -104,8 +104,8 @@ function OpportunitesPage() {
   return (
     <div>
       <PageHeader
-        titre="Opportunités commerciales"
-        sousTitre="Agent IA Commercial — qualification, chiffrage et relances"
+        titre="Workflow commercial"
+        sousTitre="Pilotage intelligent des opportunités, prospects, devis et relances"
         actions={
           <>
             <div className="flex overflow-hidden rounded-lg border border-border">

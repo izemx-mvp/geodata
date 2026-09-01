@@ -164,16 +164,18 @@ export function SectionCard({
   className?: string;
 }) {
   return (
-    <section className={cn("card-elev rounded-xl border border-border bg-card", className)}>
+    <section className={cn("surface-card", className)}>
       {titre ? (
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-3.5">
-          <div>
+          <div className="relative pl-3">
+            <span className="absolute top-0.5 bottom-0.5 left-0 w-[2px] rounded-full bg-primary/70" />
             <h2 className="text-sm font-semibold tracking-wide text-foreground uppercase">{titre}</h2>
             {description ? <p className="mt-0.5 text-xs text-muted-foreground">{description}</p> : null}
           </div>
           {actions ? <div className="flex items-center gap-2">{actions}</div> : null}
         </header>
       ) : null}
+
       <div className="p-5">{children}</div>
     </section>
   );

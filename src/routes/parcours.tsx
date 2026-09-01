@@ -24,7 +24,7 @@ function ParcoursPage() {
   const cmd = affaire ? state.commandes.find((c) => c.affaireId === affaire.id) : undefined;
   const ci = cmd ? state.commandesInternes.find((c) => c.commandeId === cmd.id) : undefined;
 
-  const etapes: { titre: string; desc: string; agent: string; lien?: { to: string; params?: Record<string, string>; label: string } }[] = [
+  const etapes: { titre: string; desc: string; agent: string; lien?: { to: string; params?: Record<string, string>; label: string } | undefined }[] = [
     { titre: "1. Lead / Consultation", desc: "Réception d'une demande client ou détection d'une consultation restreinte.", agent: "Agent Commercial", lien: { to: "/consultations", label: "Voir les consultations" } },
     { titre: "2. Qualification", desc: "L'agent IA analyse le besoin, calcule un score et liste les informations manquantes.", agent: "Agent Commercial", lien: opp ? { to: "/opportunites/$id", params: { id: opp.id }, label: `Ouvrir ${opp.reference}` } : undefined },
     { titre: "3. Opportunité", desc: "L'opportunité entre dans le pipeline commercial et suit ses étapes.", agent: "Agent Commercial", lien: { to: "/opportunites", label: "Voir le pipeline" } },

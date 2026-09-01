@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { fmtDate, fmtMAD, joursRestants, useGeo } from "@/lib/geodata/store";
 
-export const Route = createFileRoute("/affaires")({
+export const Route = createFileRoute("/affaires/")({
   head: () => ({
     meta: [
       { title: "Affaires — GEODATA" },

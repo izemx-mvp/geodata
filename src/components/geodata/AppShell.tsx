@@ -26,6 +26,7 @@ import {
   Truck,
   Users,
   UsersRound,
+  Route as Route2,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -80,7 +81,8 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
     items: [
       { to: "/affaires", label: "Affaires", icon: <Boxes className="size-4" />, section: "projets" },
       { to: "/commandes", label: "Commandes", icon: <PackageCheck className="size-4" />, section: "projets" },
-      { to: "/planification", label: "Planification", icon: <ListChecks className="size-4" />, section: "projets" },
+      { to: "/commandes-internes", label: "Commandes internes", icon: <ListChecks className="size-4" />, section: "projets" },
+      { to: "/planning", label: "Planning", icon: <CalendarDays className="size-4" />, section: "projets" },
       { to: "/execution", label: "Exécution", icon: <Hammer className="size-4" />, section: "execution" },
       { to: "/validation", label: "Validation", icon: <CheckCircle2 className="size-4" />, section: "projets" },
       { to: "/livraisons", label: "Livraisons", icon: <Truck className="size-4" />, section: "projets" },
@@ -93,6 +95,7 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
       { to: "/equipes", label: "Équipes", icon: <UsersRound className="size-4" />, section: "ressources" },
       { to: "/documents", label: "Documents", icon: <FileText className="size-4" />, section: "ressources" },
       { to: "/notifications", label: "Notifications", icon: <Bell className="size-4" />, section: "ressources" },
+      { to: "/parcours", label: "Parcours démo", icon: <Route2 className="size-4" />, section: "global" },
     ],
   },
   {
@@ -100,7 +103,7 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
     items: [
       { to: "/utilisateurs", label: "Utilisateurs", icon: <Users className="size-4" />, section: "parametres" },
       { to: "/roles", label: "Rôles & permissions", icon: <ShieldCheck className="size-4" />, section: "parametres" },
-      { to: "/agents-ia", label: "Configuration des agents IA", icon: <Cog className="size-4" />, section: "parametres" },
+      { to: "/configuration-ia", label: "Configuration des agents IA", icon: <Cog className="size-4" />, section: "parametres" },
     ],
   },
 ];

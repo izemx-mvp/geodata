@@ -47,8 +47,8 @@ function LivraisonsPage() {
               <div className="mt-3 flex flex-wrap gap-2">
                 {ci.statut === "Contrôle en cours" ? (
                   <>
-                    <Button size="sm" onClick={() => { updateCi(ci.id, { statut: "Livrée client", controle: ci.controle ? { ...ci.controle, resultat: "VALIDÉ" } : undefined, historique: [...ci.historique, { date: new Date().toISOString().slice(0, 10), evenement: "Contrôle validé" }] }); toast.success("Contrôle validé"); }}>Contrôle validé</Button>
-                    <Button size="sm" variant="outline" onClick={() => { updateCi(ci.id, { statut: "Rejetée", controle: ci.controle ? { ...ci.controle, resultat: "REJETÉ" } : undefined }); toast.error("Contrôle rejeté"); }}>Contrôle rejeté</Button>
+                    <Button size="sm" onClick={() => { updateCi(ci.id, { statut: "Livrée client", ...(ci.controle ? { controle: { ...ci.controle, resultat: "VALIDÉ" as const } } : {}), historique: [...ci.historique, { date: new Date().toISOString().slice(0, 10), evenement: "Contrôle validé" }] }); toast.success("Contrôle validé"); }}>Contrôle validé</Button>
+                    <Button size="sm" variant="outline" onClick={() => { updateCi(ci.id, { statut: "Rejetée", ...(ci.controle ? { controle: { ...ci.controle, resultat: "REJETÉ" as const } } : {}) }); toast.error("Contrôle rejeté"); }}>Contrôle rejeté</Button>
                   </>
                 ) : null}
                 {ci.statut === "Livrée client" ? (

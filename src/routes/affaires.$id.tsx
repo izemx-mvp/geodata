@@ -2,7 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2, Download, FileText, Plus, Send, ShieldAlert, Truck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { AssistantIA } from "@/components/geodata/AssistantIA";
 import { Field, PageHeader, ProgressBar, SectionCard, StatusBadge, Timeline } from "@/components/geodata/ui-bits";
+import { WorkflowAffaire, calculerWorkflow } from "@/components/geodata/WorkflowAffaire";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -44,6 +46,11 @@ function AffaireDetail() {
   const cis = state.commandesInternes.filter((ci) => commandes.some((c) => c.id === ci.commandeId));
   const taches = state.taches.filter((t) => cis.some((ci) => ci.id === t.commandeInterneId));
   const rejets = state.rejets.filter((r) => cis.some((ci) => ci.id === r.commandeInterneId));
+
+  const etapes = calculerWorkflow({ affaire, commandes, cis, taches, rejets });
+  const livrablesDocs = taches.flatMap((t) => t.livrables);
+  const historique = [...cis.flatMap((ci) => ci.historique.map((h) => ({ ...h, evenement: `${ci.reference} — ${h.evenement}` })))]
+    .sort((a, b) => b.date.localeCompare(a.date));
 
   function histo(ci: CommandeInterne, evenement: string, patch: Partial<CommandeInterne> = {}) {
     updateCi(ci.id, { ...patch, historique: [...ci.historique, { date: new Date().toISOString().slice(0, 10), evenement }] });

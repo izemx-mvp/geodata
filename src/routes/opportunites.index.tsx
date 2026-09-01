@@ -23,13 +23,13 @@ import { OPP_STAGES, OPP_TYPES, SERVICES, type OppStage, type Opportunite } from
 export const Route = createFileRoute("/opportunites/")({
   head: () => ({
     meta: [
-      { title: "Opportunités commerciales — GEODATA" },
+      { title: "Workflow commercial — GEODATA" },
       {
         name: "description",
-        content: "Pipeline commercial GEODATA : consultations, demandes de devis et scoring IA des opportunités.",
+        content: "Pilotage intelligent des opportunités, prospects, devis et relances GEODATA avec scoring IA.",
       },
-      { property: "og:title", content: "Opportunités commerciales — GEODATA" },
-      { property: "og:description", content: "Kanban et tableau des opportunités commerciales qualifiées par l'IA." },
+      { property: "og:title", content: "Workflow commercial — GEODATA" },
+      { property: "og:description", content: "Kanban stratégique et tableau du workflow commercial GEODATA." },
     ],
   }),
   component: OpportunitesPage,

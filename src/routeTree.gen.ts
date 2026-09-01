@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OpportunitesRouteImport } from './routes/opportunites'
+import { Route as OpportunitesIdRouteImport } from './routes/opportunites.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,39 @@ const OpportunitesRoute = OpportunitesRouteImport.update({
   path: '/opportunites',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => OpportunitesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/opportunites': typeof OpportunitesRoute
+  '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/opportunites': typeof OpportunitesRoute
+  '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/opportunites': typeof OpportunitesRoute
+  '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/opportunites'
+  fullPaths: '/' | '/opportunites' | '/opportunites/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/opportunites'
-  id: '__root__' | '/' | '/opportunites'
+  to: '/' | '/opportunites' | '/opportunites/$id'
+  id: '__root__' | '/' | '/opportunites' | '/opportunites/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  OpportunitesRoute: typeof OpportunitesRoute
+  OpportunitesRoute: typeof OpportunitesRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +74,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpportunitesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/opportunites/$id': {
+      id: '/opportunites/$id'
+      path: '/$id'
+      fullPath: '/opportunites/$id'
+      preLoaderRoute: typeof OpportunitesIdRouteImport
+      parentRoute: typeof OpportunitesRoute
+    }
   }
 }
 
+interface OpportunitesRouteChildren {
+  OpportunitesIdRoute: typeof OpportunitesIdRoute
+}
+
+const OpportunitesRouteChildren: OpportunitesRouteChildren = {
+  OpportunitesIdRoute: OpportunitesIdRoute,
+}
+
+const OpportunitesRouteWithChildren = OpportunitesRoute._addFileChildren(
+  OpportunitesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  OpportunitesRoute: OpportunitesRoute,
+  OpportunitesRoute: OpportunitesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -20,10 +20,15 @@ import { Route as CommandesInternesRouteImport } from './routes/commandes-intern
 import { Route as ConsultationsRouteImport } from './routes/consultations'
 import { Route as DevisRouteImport } from './routes/devis'
 import { Route as DossiersRouteImport } from './routes/dossiers'
+import { Route as ExecutionRouteImport } from './routes/execution'
+import { Route as LivraisonsRouteImport } from './routes/livraisons'
 import { Route as OpportunitesRouteImport } from './routes/opportunites'
 import { Route as OpportunitesDetecteesRouteImport } from './routes/opportunites-detectees'
+import { Route as PlanningRouteImport } from './routes/planning'
 import { Route as ReferencesRouteImport } from './routes/references'
+import { Route as RejetsRouteImport } from './routes/rejets'
 import { Route as ReseauxSociauxRouteImport } from './routes/reseaux-sociaux'
+import { Route as ValidationRouteImport } from './routes/validation'
 import { Route as AffairesIdRouteImport } from './routes/affaires.$id'
 import { Route as AppelsOffresIdRouteImport } from './routes/appels-offres.$id'
 import { Route as OpportunitesIdRouteImport } from './routes/opportunites.$id'
@@ -83,6 +88,16 @@ const DossiersRoute = DossiersRouteImport.update({
   path: '/dossiers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExecutionRoute = ExecutionRouteImport.update({
+  id: '/execution',
+  path: '/execution',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LivraisonsRoute = LivraisonsRouteImport.update({
+  id: '/livraisons',
+  path: '/livraisons',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OpportunitesRoute = OpportunitesRouteImport.update({
   id: '/opportunites',
   path: '/opportunites',
@@ -93,14 +108,29 @@ const OpportunitesDetecteesRoute = OpportunitesDetecteesRouteImport.update({
   path: '/opportunites-detectees',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlanningRoute = PlanningRouteImport.update({
+  id: '/planning',
+  path: '/planning',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReferencesRoute = ReferencesRouteImport.update({
   id: '/references',
   path: '/references',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RejetsRoute = RejetsRouteImport.update({
+  id: '/rejets',
+  path: '/rejets',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReseauxSociauxRoute = ReseauxSociauxRouteImport.update({
   id: '/reseaux-sociaux',
   path: '/reseaux-sociaux',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ValidationRoute = ValidationRouteImport.update({
+  id: '/validation',
+  path: '/validation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AffairesIdRoute = AffairesIdRouteImport.update({
@@ -131,10 +161,15 @@ export interface FileRoutesByFullPath {
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/dossiers': typeof DossiersRoute
+  '/execution': typeof ExecutionRoute
+  '/livraisons': typeof LivraisonsRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/planning': typeof PlanningRoute
   '/references': typeof ReferencesRoute
+  '/rejets': typeof RejetsRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
+  '/validation': typeof ValidationRoute
   '/affaires/$id': typeof AffairesIdRoute
   '/appels-offres/$id': typeof AppelsOffresIdRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
@@ -151,10 +186,15 @@ export interface FileRoutesByTo {
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/dossiers': typeof DossiersRoute
+  '/execution': typeof ExecutionRoute
+  '/livraisons': typeof LivraisonsRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/planning': typeof PlanningRoute
   '/references': typeof ReferencesRoute
+  '/rejets': typeof RejetsRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
+  '/validation': typeof ValidationRoute
   '/affaires/$id': typeof AffairesIdRoute
   '/appels-offres/$id': typeof AppelsOffresIdRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
@@ -172,10 +212,15 @@ export interface FileRoutesById {
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/dossiers': typeof DossiersRoute
+  '/execution': typeof ExecutionRoute
+  '/livraisons': typeof LivraisonsRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/planning': typeof PlanningRoute
   '/references': typeof ReferencesRoute
+  '/rejets': typeof RejetsRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
+  '/validation': typeof ValidationRoute
   '/affaires/$id': typeof AffairesIdRoute
   '/appels-offres/$id': typeof AppelsOffresIdRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
@@ -194,10 +239,15 @@ export interface FileRouteTypes {
     | '/consultations'
     | '/devis'
     | '/dossiers'
+    | '/execution'
+    | '/livraisons'
     | '/opportunites'
     | '/opportunites-detectees'
+    | '/planning'
     | '/references'
+    | '/rejets'
     | '/reseaux-sociaux'
+    | '/validation'
     | '/affaires/$id'
     | '/appels-offres/$id'
     | '/opportunites/$id'
@@ -214,10 +264,15 @@ export interface FileRouteTypes {
     | '/consultations'
     | '/devis'
     | '/dossiers'
+    | '/execution'
+    | '/livraisons'
     | '/opportunites'
     | '/opportunites-detectees'
+    | '/planning'
     | '/references'
+    | '/rejets'
     | '/reseaux-sociaux'
+    | '/validation'
     | '/affaires/$id'
     | '/appels-offres/$id'
     | '/opportunites/$id'
@@ -234,10 +289,15 @@ export interface FileRouteTypes {
     | '/consultations'
     | '/devis'
     | '/dossiers'
+    | '/execution'
+    | '/livraisons'
     | '/opportunites'
     | '/opportunites-detectees'
+    | '/planning'
     | '/references'
+    | '/rejets'
     | '/reseaux-sociaux'
+    | '/validation'
     | '/affaires/$id'
     | '/appels-offres/$id'
     | '/opportunites/$id'
@@ -255,10 +315,15 @@ export interface RootRouteChildren {
   ConsultationsRoute: typeof ConsultationsRoute
   DevisRoute: typeof DevisRoute
   DossiersRoute: typeof DossiersRoute
+  ExecutionRoute: typeof ExecutionRoute
+  LivraisonsRoute: typeof LivraisonsRoute
   OpportunitesRoute: typeof OpportunitesRouteWithChildren
   OpportunitesDetecteesRoute: typeof OpportunitesDetecteesRoute
+  PlanningRoute: typeof PlanningRoute
   ReferencesRoute: typeof ReferencesRoute
+  RejetsRoute: typeof RejetsRoute
   ReseauxSociauxRoute: typeof ReseauxSociauxRoute
+  ValidationRoute: typeof ValidationRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -340,6 +405,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DossiersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/execution': {
+      id: '/execution'
+      path: '/execution'
+      fullPath: '/execution'
+      preLoaderRoute: typeof ExecutionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/livraisons': {
+      id: '/livraisons'
+      path: '/livraisons'
+      fullPath: '/livraisons'
+      preLoaderRoute: typeof LivraisonsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/opportunites': {
       id: '/opportunites'
       path: '/opportunites'
@@ -354,6 +433,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpportunitesDetecteesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/planning': {
+      id: '/planning'
+      path: '/planning'
+      fullPath: '/planning'
+      preLoaderRoute: typeof PlanningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/references': {
       id: '/references'
       path: '/references'
@@ -361,11 +447,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rejets': {
+      id: '/rejets'
+      path: '/rejets'
+      fullPath: '/rejets'
+      preLoaderRoute: typeof RejetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reseaux-sociaux': {
       id: '/reseaux-sociaux'
       path: '/reseaux-sociaux'
       fullPath: '/reseaux-sociaux'
       preLoaderRoute: typeof ReseauxSociauxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/validation': {
+      id: '/validation'
+      path: '/validation'
+      fullPath: '/validation'
+      preLoaderRoute: typeof ValidationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/affaires/$id': {
@@ -440,10 +540,15 @@ const rootRouteChildren: RootRouteChildren = {
   ConsultationsRoute: ConsultationsRoute,
   DevisRoute: DevisRoute,
   DossiersRoute: DossiersRoute,
+  ExecutionRoute: ExecutionRoute,
+  LivraisonsRoute: LivraisonsRoute,
   OpportunitesRoute: OpportunitesRouteWithChildren,
   OpportunitesDetecteesRoute: OpportunitesDetecteesRoute,
+  PlanningRoute: PlanningRoute,
   ReferencesRoute: ReferencesRoute,
+  RejetsRoute: RejetsRoute,
   ReseauxSociauxRoute: ReseauxSociauxRoute,
+  ValidationRoute: ValidationRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

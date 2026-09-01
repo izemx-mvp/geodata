@@ -61,52 +61,71 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/*
+ * GEODATA Maroc brand system.
+ * Source of truth: official logo (geodata.ma) — orange #F89C03 on anthracite.
+ * Every accent below is the logo orange or a lighter/darker variation of it,
+ * plus neutrals for readability and semantic status colours.
+ */
+
 :root {
-  --radius: 0.75rem;
-  --background: oklch(0.995 0.002 90);
-  --foreground: oklch(0.26 0.012 260);
+  --radius: 0.625rem;
+  --background: oklch(0.985 0.003 80);
+  --foreground: oklch(0.229 0.009 256);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.26 0.012 260);
+  --card-foreground: oklch(0.229 0.009 256);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.26 0.012 260);
-  --primary: oklch(0.665 0.185 46);
-  --primary-foreground: oklch(0.995 0.005 90);
-  --secondary: oklch(0.962 0.005 260);
-  --secondary-foreground: oklch(0.3 0.012 260);
-  --muted: oklch(0.965 0.004 260);
-  --muted-foreground: oklch(0.53 0.017 260);
-  --accent: oklch(0.955 0.03 60);
-  --accent-foreground: oklch(0.42 0.13 46);
-  --destructive: oklch(0.577 0.225 27.325);
+  --popover-foreground: oklch(0.229 0.009 256);
+
+  /* Brand orange, sampled from the official GEODATA logo (#F89C03) */
+  --brand: oklch(0.769 0.168 68.3);
+  --brand-soft: oklch(0.831 0.145 74.2);
+  --brand-deep: oklch(0.678 0.155 62.6);
+  --brand-ink: oklch(0.5 0.12 60);
+
+  --primary: oklch(0.769 0.168 68.3);
+  --primary-foreground: oklch(0.229 0.009 256);
+  --primary-hover: oklch(0.72 0.163 65);
+  --primary-active: oklch(0.678 0.155 62.6);
+
+  --secondary: oklch(0.958 0.004 260);
+  --secondary-foreground: oklch(0.3 0.01 258);
+  --muted: oklch(0.962 0.004 260);
+  --muted-foreground: oklch(0.505 0.014 258);
+  --accent: oklch(0.955 0.035 72);
+  --accent-foreground: oklch(0.44 0.12 60);
+  --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.99 0.003 90);
-  --border: oklch(0.918 0.006 260);
-  --input: oklch(0.918 0.006 260);
-  --ring: oklch(0.665 0.185 46);
+  --border: oklch(0.916 0.005 260);
+  --input: oklch(0.916 0.005 260);
+  --ring: oklch(0.769 0.168 68.3);
 
-  --success: oklch(0.63 0.14 155);
+  --success: oklch(0.6 0.12 155);
   --success-foreground: oklch(0.99 0.003 90);
-  --warning: oklch(0.78 0.15 78);
-  --warning-foreground: oklch(0.3 0.06 60);
-  --info: oklch(0.58 0.11 240);
+  --warning: oklch(0.769 0.168 68.3);
+  --warning-foreground: oklch(0.229 0.009 256);
+  --info: oklch(0.52 0.06 250);
   --info-foreground: oklch(0.99 0.003 90);
-  --anthracite: oklch(0.3 0.012 260);
+  --anthracite: oklch(0.229 0.009 256);
 
-  --chart-1: oklch(0.665 0.185 46);
-  --chart-2: oklch(0.58 0.11 240);
-  --chart-3: oklch(0.63 0.14 155);
-  --chart-4: oklch(0.78 0.15 78);
-  --chart-5: oklch(0.45 0.03 260);
+  --chart-1: oklch(0.769 0.168 68.3);
+  --chart-2: oklch(0.678 0.155 62.6);
+  --chart-3: oklch(0.5 0.04 255);
+  --chart-4: oklch(0.831 0.145 74.2);
+  --chart-5: oklch(0.6 0.12 155);
 
-  --sidebar: oklch(0.255 0.012 258);
-  --sidebar-foreground: oklch(0.9 0.006 260);
-  --sidebar-primary: oklch(0.665 0.185 46);
-  --sidebar-primary-foreground: oklch(0.99 0.003 90);
-  --sidebar-accent: oklch(0.32 0.014 258);
+  --sidebar: oklch(0.229 0.009 256);
+  --sidebar-foreground: oklch(0.9 0.005 260);
+  --sidebar-primary: oklch(0.769 0.168 68.3);
+  --sidebar-primary-foreground: oklch(0.229 0.009 256);
+  --sidebar-accent: oklch(0.308 0.016 260);
   --sidebar-accent-foreground: oklch(0.98 0.003 90);
-  --sidebar-border: oklch(0.36 0.012 258);
-  --sidebar-ring: oklch(0.665 0.185 46);
+  --sidebar-border: oklch(0.33 0.012 258);
+  --sidebar-ring: oklch(0.769 0.168 68.3);
 
-  --grid-line: oklch(0.9 0.008 260);
+  --grid-line: oklch(0.912 0.006 260);
+  --shadow-elev: 0 1px 2px oklch(0.229 0.009 256 / 0.05), 0 10px 28px -16px oklch(0.229 0.009 256 / 0.22);
+  --shadow-brand: 0 10px 30px -14px oklch(0.769 0.168 68.3 / 0.55);
 }
 
 @theme inline {
@@ -117,6 +136,66 @@
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
   --color-anthracite: var(--anthracite);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-deep: var(--brand-deep);
+  --animate-geo-drift: geo-drift 26s linear infinite;
+  --animate-geo-pulse: geo-pulse 3.2s ease-in-out infinite;
+  --animate-geo-scan: geo-scan 7s linear infinite;
+  --animate-reveal: geo-reveal 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes geo-drift {
+  from {
+    background-position:
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      480px 0,
+      0 480px;
+  }
+}
+
+@keyframes geo-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes geo-scan {
+  0% {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.7;
+  }
+  88% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(130%);
+    opacity: 0;
+  }
+}
+
+@keyframes geo-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @layer base {
@@ -135,7 +214,16 @@
   h1,
   h2,
   h3 {
-    letter-spacing: -0.015em;
+    letter-spacing: -0.018em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: oklch(0.769 0.168 68.3 / 0.32);
   }
 }
 
@@ -149,18 +237,75 @@
 @utility topo-surface {
   background-color: var(--color-background);
   background-image:
-    radial-gradient(circle at 12% 20%, oklch(0.665 0.185 46 / 0.05) 0 12%, transparent 42%),
+    radial-gradient(circle at 12% 18%, oklch(0.769 0.168 68.3 / 0.07) 0 12%, transparent 44%),
+    radial-gradient(circle at 88% 4%, oklch(0.678 0.155 62.6 / 0.05) 0 10%, transparent 40%),
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size:
+    100% 100%,
     100% 100%,
     40px 40px,
     40px 40px;
 }
 
-@utility card-elev {
-  box-shadow:
-    0 1px 2px oklch(0.26 0.012 260 / 0.05),
-    0 8px 24px -12px oklch(0.26 0.012 260 / 0.18);
+/* Living cartographic grid used on the shell and login backgrounds */
+@utility geo-grid-live {
+  background-image:
+    linear-gradient(to right, oklch(0.769 0.168 68.3 / 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.769 0.168 68.3 / 0.09) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: var(--animate-geo-drift);
 }
+
+@utility card-elev {
+  box-shadow: var(--shadow-elev);
+}
+
+@utility surface-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elev);
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+@utility hover-lift {
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elev);
+    border-color: oklch(0.769 0.168 68.3 / 0.45);
+  }
+}
+
+@utility brand-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    background: var(--brand);
+    transition: transform 0.3s ease;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@utility page-reveal {
+  animation: var(--animate-reveal);
+}
+
 

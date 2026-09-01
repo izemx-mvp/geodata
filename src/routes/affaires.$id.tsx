@@ -73,14 +73,79 @@ function AffaireDetail() {
       <Tabs defaultValue="resume">
         <TabsList className="flex-wrap">
           <TabsTrigger value="resume">Résumé</TabsTrigger>
+          <TabsTrigger value="workflow">Workflow</TabsTrigger>
           <TabsTrigger value="commandes">Commandes</TabsTrigger>
           <TabsTrigger value="internes">Commandes internes</TabsTrigger>
-          <TabsTrigger value="planning">Planning</TabsTrigger>
+          <TabsTrigger value="planning">Planification</TabsTrigger>
           <TabsTrigger value="execution">Exécution</TabsTrigger>
           <TabsTrigger value="validation">Validation</TabsTrigger>
-          <TabsTrigger value="livraison">Livraison</TabsTrigger>
+          <TabsTrigger value="livraison">Livraisons</TabsTrigger>
           <TabsTrigger value="rejets">Rejets</TabsTrigger>
+          <TabsTrigger value="documents">Documents</TabsTrigger>
+          <TabsTrigger value="historique">Historique</TabsTrigger>
+          <TabsTrigger value="ia">Assistant IA</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="workflow" className="mt-4 space-y-4">
+          <SectionCard titre="Workflow de l'affaire" description="Affaire → Commande → Commande interne → Planification → Exécution → Validation → Livraison interne → Contrôle → Livraison client → Prêt à facturer">
+            <div className="overflow-x-auto pb-2">
+              <WorkflowAffaire etapes={etapes} rejets={rejets} />
+            </div>
+          </SectionCard>
+          <SectionCard titre="Avancement par commande interne">
+            <div className="space-y-3">
+              {cis.map((ci) => (
+                <div key={ci.id} className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border p-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-foreground">{ci.reference} — {ci.designation}</p>
+                    <p className="text-xs text-muted-foreground">
+                      Chef de projet {userById(ci.chefDeProjetId)?.nom} · échéance {fmtDate(ci.dateLimite)}
+                    </p>
+                  </div>
+                  <StatusBadge statut={ci.statut} />
+                </div>
+              ))}
+              {!cis.length ? <p className="text-sm text-muted-foreground">Aucune commande interne créée.</p> : null}
+            </div>
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="documents" className="mt-4">
+          <SectionCard titre="Documents et livrables de l'affaire">
+            {livrablesDocs.length ? (
+              <ul className="divide-y divide-border">
+                {livrablesDocs.map((d) => (
+                  <li key={d.id} className="flex items-center justify-between py-2.5">
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-medium">{d.nom}</span>
+                      <span className="block text-xs text-muted-foreground">{d.type} · {d.taille} · {fmtDate(d.date)}</span>
+                    </span>
+                    <Button size="sm" variant="ghost" onClick={() => toast.success("Document téléchargé (démo)")}>
+                      <Download className="size-4" /> Télécharger
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Livrables attendus : {affaire.livrables.join(", ")}. Aucun fichier déposé pour le moment.
+              </p>
+            )}
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="historique" className="mt-4">
+          <SectionCard titre="Historique complet de l'affaire">
+            <Timeline items={historique} />
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="ia" className="mt-4">
+          <SectionCard titre="Assistant IA projet" description={`Analyse de l'affaire ${affaire.reference}`}>
+            <AssistantIA contexte={affaire.reference} />
+          </SectionCard>
+        </TabsContent>
+
 
         <TabsContent value="resume" className="mt-4 grid gap-4 lg:grid-cols-3">
           <SectionCard titre="Informations de l'affaire" className="lg:col-span-2">

@@ -24,6 +24,7 @@ import { Route as OpportunitesRouteImport } from './routes/opportunites'
 import { Route as OpportunitesDetecteesRouteImport } from './routes/opportunites-detectees'
 import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as ReseauxSociauxRouteImport } from './routes/reseaux-sociaux'
+import { Route as AffairesIdRouteImport } from './routes/affaires.$id'
 import { Route as AppelsOffresIdRouteImport } from './routes/appels-offres.$id'
 import { Route as OpportunitesIdRouteImport } from './routes/opportunites.$id'
 
@@ -102,6 +103,11 @@ const ReseauxSociauxRoute = ReseauxSociauxRouteImport.update({
   path: '/reseaux-sociaux',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AffairesIdRoute = AffairesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AffairesRoute,
+} as any)
 const AppelsOffresIdRoute = AppelsOffresIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -115,7 +121,7 @@ const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/affaires': typeof AffairesRoute
+  '/affaires': typeof AffairesRouteWithChildren
   '/appels-offres': typeof AppelsOffresRouteWithChildren
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
@@ -129,12 +135,13 @@ export interface FileRoutesByFullPath {
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
   '/references': typeof ReferencesRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
+  '/affaires/$id': typeof AffairesIdRoute
   '/appels-offres/$id': typeof AppelsOffresIdRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/affaires': typeof AffairesRoute
+  '/affaires': typeof AffairesRouteWithChildren
   '/appels-offres': typeof AppelsOffresRouteWithChildren
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
@@ -148,13 +155,14 @@ export interface FileRoutesByTo {
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
   '/references': typeof ReferencesRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
+  '/affaires/$id': typeof AffairesIdRoute
   '/appels-offres/$id': typeof AppelsOffresIdRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/affaires': typeof AffairesRoute
+  '/affaires': typeof AffairesRouteWithChildren
   '/appels-offres': typeof AppelsOffresRouteWithChildren
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
   '/references': typeof ReferencesRoute
   '/reseaux-sociaux': typeof ReseauxSociauxRoute
+  '/affaires/$id': typeof AffairesIdRoute
   '/appels-offres/$id': typeof AppelsOffresIdRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/opportunites-detectees'
     | '/references'
     | '/reseaux-sociaux'
+    | '/affaires/$id'
     | '/appels-offres/$id'
     | '/opportunites/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/opportunites-detectees'
     | '/references'
     | '/reseaux-sociaux'
+    | '/affaires/$id'
     | '/appels-offres/$id'
     | '/opportunites/$id'
   id:
@@ -227,13 +238,14 @@ export interface FileRouteTypes {
     | '/opportunites-detectees'
     | '/references'
     | '/reseaux-sociaux'
+    | '/affaires/$id'
     | '/appels-offres/$id'
     | '/opportunites/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AffairesRoute: typeof AffairesRoute
+  AffairesRoute: typeof AffairesRouteWithChildren
   AppelsOffresRoute: typeof AppelsOffresRouteWithChildren
   CalendrierAoRoute: typeof CalendrierAoRoute
   CalendrierEditorialRoute: typeof CalendrierEditorialRoute
@@ -356,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReseauxSociauxRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/affaires/$id': {
+      id: '/affaires/$id'
+      path: '/$id'
+      fullPath: '/affaires/$id'
+      preLoaderRoute: typeof AffairesIdRouteImport
+      parentRoute: typeof AffairesRoute
+    }
     '/appels-offres/$id': {
       id: '/appels-offres/$id'
       path: '/$id'
@@ -372,6 +391,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AffairesRouteChildren {
+  AffairesIdRoute: typeof AffairesIdRoute
+}
+
+const AffairesRouteChildren: AffairesRouteChildren = {
+  AffairesIdRoute: AffairesIdRoute,
+}
+
+const AffairesRouteWithChildren = AffairesRoute._addFileChildren(
+  AffairesRouteChildren,
+)
 
 interface AppelsOffresRouteChildren {
   AppelsOffresIdRoute: typeof AppelsOffresIdRoute
@@ -399,7 +430,7 @@ const OpportunitesRouteWithChildren = OpportunitesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AffairesRoute: AffairesRoute,
+  AffairesRoute: AffairesRouteWithChildren,
   AppelsOffresRoute: AppelsOffresRouteWithChildren,
   CalendrierAoRoute: CalendrierAoRoute,
   CalendrierEditorialRoute: CalendrierEditorialRoute,

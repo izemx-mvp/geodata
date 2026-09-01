@@ -16,6 +16,7 @@ import {
   LayoutGrid,
   Library,
   ListChecks,
+  LogOut,
   MessageSquareShare,
   PackageCheck,
   Radar,

@@ -10,15 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CalendrierEditorialRouteImport } from './routes/calendrier-editorial'
 import { Route as ClientsRouteImport } from './routes/clients'
 import { Route as ConsultationsRouteImport } from './routes/consultations'
 import { Route as DevisRouteImport } from './routes/devis'
 import { Route as OpportunitesRouteImport } from './routes/opportunites'
+import { Route as ReseauxSociauxRouteImport } from './routes/reseaux-sociaux'
 import { Route as OpportunitesIdRouteImport } from './routes/opportunites.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendrierEditorialRoute = CalendrierEditorialRouteImport.update({
+  id: '/calendrier-editorial',
+  path: '/calendrier-editorial',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClientsRoute = ClientsRouteImport.update({
@@ -41,6 +48,11 @@ const OpportunitesRoute = OpportunitesRouteImport.update({
   path: '/opportunites',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReseauxSociauxRoute = ReseauxSociauxRouteImport.update({
+  id: '/reseaux-sociaux',
+  path: '/reseaux-sociaux',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -49,62 +61,76 @@ const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
+  '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
+  '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
+  '/reseaux-sociaux': typeof ReseauxSociauxRoute
   '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/calendrier-editorial'
     | '/clients'
     | '/consultations'
     | '/devis'
     | '/opportunites'
+    | '/reseaux-sociaux'
     | '/opportunites/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/calendrier-editorial'
     | '/clients'
     | '/consultations'
     | '/devis'
     | '/opportunites'
+    | '/reseaux-sociaux'
     | '/opportunites/$id'
   id:
     | '__root__'
     | '/'
+    | '/calendrier-editorial'
     | '/clients'
     | '/consultations'
     | '/devis'
     | '/opportunites'
+    | '/reseaux-sociaux'
     | '/opportunites/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendrierEditorialRoute: typeof CalendrierEditorialRoute
   ClientsRoute: typeof ClientsRoute
   ConsultationsRoute: typeof ConsultationsRoute
   DevisRoute: typeof DevisRoute
   OpportunitesRoute: typeof OpportunitesRouteWithChildren
+  ReseauxSociauxRoute: typeof ReseauxSociauxRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -114,6 +140,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendrier-editorial': {
+      id: '/calendrier-editorial'
+      path: '/calendrier-editorial'
+      fullPath: '/calendrier-editorial'
+      preLoaderRoute: typeof CalendrierEditorialRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/clients': {
@@ -144,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpportunitesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reseaux-sociaux': {
+      id: '/reseaux-sociaux'
+      path: '/reseaux-sociaux'
+      fullPath: '/reseaux-sociaux'
+      preLoaderRoute: typeof ReseauxSociauxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/opportunites/$id': {
       id: '/opportunites/$id'
       path: '/$id'
@@ -168,10 +208,12 @@ const OpportunitesRouteWithChildren = OpportunitesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendrierEditorialRoute: CalendrierEditorialRoute,
   ClientsRoute: ClientsRoute,
   ConsultationsRoute: ConsultationsRoute,
   DevisRoute: DevisRoute,
   OpportunitesRoute: OpportunitesRouteWithChildren,
+  ReseauxSociauxRoute: ReseauxSociauxRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

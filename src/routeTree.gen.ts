@@ -10,33 +10,62 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ClientsRouteImport } from './routes/clients'
+import { Route as OpportunitesRouteImport } from './routes/opportunites'
+import { Route as OpportunitesIdRouteImport } from './routes/opportunites.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClientsRoute = ClientsRouteImport.update({
+  id: '/clients',
+  path: '/clients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpportunitesRoute = OpportunitesRouteImport.update({
+  id: '/opportunites',
+  path: '/opportunites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => OpportunitesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clients': typeof ClientsRoute
+  '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clients': typeof ClientsRoute
+  '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/clients': typeof ClientsRoute
+  '/opportunites': typeof OpportunitesRouteWithChildren
+  '/opportunites/$id': typeof OpportunitesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/clients' | '/opportunites' | '/opportunites/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/clients' | '/opportunites' | '/opportunites/$id'
+  id: '__root__' | '/' | '/clients' | '/opportunites' | '/opportunites/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClientsRoute: typeof ClientsRoute
+  OpportunitesRoute: typeof OpportunitesRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +77,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clients': {
+      id: '/clients'
+      path: '/clients'
+      fullPath: '/clients'
+      preLoaderRoute: typeof ClientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/opportunites': {
+      id: '/opportunites'
+      path: '/opportunites'
+      fullPath: '/opportunites'
+      preLoaderRoute: typeof OpportunitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/opportunites/$id': {
+      id: '/opportunites/$id'
+      path: '/$id'
+      fullPath: '/opportunites/$id'
+      preLoaderRoute: typeof OpportunitesIdRouteImport
+      parentRoute: typeof OpportunitesRoute
+    }
   }
 }
 
+interface OpportunitesRouteChildren {
+  OpportunitesIdRoute: typeof OpportunitesIdRoute
+}
+
+const OpportunitesRouteChildren: OpportunitesRouteChildren = {
+  OpportunitesIdRoute: OpportunitesIdRoute,
+}
+
+const OpportunitesRouteWithChildren = OpportunitesRoute._addFileChildren(
+  OpportunitesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClientsRoute: ClientsRoute,
+  OpportunitesRoute: OpportunitesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

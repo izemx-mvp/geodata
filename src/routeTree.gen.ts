@@ -10,10 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AffairesRouteImport } from './routes/affaires'
 import { Route as AppelsOffresRouteImport } from './routes/appels-offres'
 import { Route as CalendrierAoRouteImport } from './routes/calendrier-ao'
 import { Route as CalendrierEditorialRouteImport } from './routes/calendrier-editorial'
 import { Route as ClientsRouteImport } from './routes/clients'
+import { Route as CommandesRouteImport } from './routes/commandes'
+import { Route as CommandesInternesRouteImport } from './routes/commandes-internes'
 import { Route as ConsultationsRouteImport } from './routes/consultations'
 import { Route as DevisRouteImport } from './routes/devis'
 import { Route as DossiersRouteImport } from './routes/dossiers'
@@ -27,6 +30,11 @@ import { Route as OpportunitesIdRouteImport } from './routes/opportunites.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AffairesRoute = AffairesRouteImport.update({
+  id: '/affaires',
+  path: '/affaires',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppelsOffresRoute = AppelsOffresRouteImport.update({
@@ -47,6 +55,16 @@ const CalendrierEditorialRoute = CalendrierEditorialRouteImport.update({
 const ClientsRoute = ClientsRouteImport.update({
   id: '/clients',
   path: '/clients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommandesRoute = CommandesRouteImport.update({
+  id: '/commandes',
+  path: '/commandes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommandesInternesRoute = CommandesInternesRouteImport.update({
+  id: '/commandes-internes',
+  path: '/commandes-internes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConsultationsRoute = ConsultationsRouteImport.update({
@@ -97,10 +115,13 @@ const OpportunitesIdRoute = OpportunitesIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/affaires': typeof AffairesRoute
   '/appels-offres': typeof AppelsOffresRouteWithChildren
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
+  '/commandes': typeof CommandesRoute
+  '/commandes-internes': typeof CommandesInternesRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/dossiers': typeof DossiersRoute
@@ -113,10 +134,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/affaires': typeof AffairesRoute
   '/appels-offres': typeof AppelsOffresRouteWithChildren
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
+  '/commandes': typeof CommandesRoute
+  '/commandes-internes': typeof CommandesInternesRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/dossiers': typeof DossiersRoute
@@ -130,10 +154,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/affaires': typeof AffairesRoute
   '/appels-offres': typeof AppelsOffresRouteWithChildren
   '/calendrier-ao': typeof CalendrierAoRoute
   '/calendrier-editorial': typeof CalendrierEditorialRoute
   '/clients': typeof ClientsRoute
+  '/commandes': typeof CommandesRoute
+  '/commandes-internes': typeof CommandesInternesRoute
   '/consultations': typeof ConsultationsRoute
   '/devis': typeof DevisRoute
   '/dossiers': typeof DossiersRoute
@@ -148,10 +175,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/affaires'
     | '/appels-offres'
     | '/calendrier-ao'
     | '/calendrier-editorial'
     | '/clients'
+    | '/commandes'
+    | '/commandes-internes'
     | '/consultations'
     | '/devis'
     | '/dossiers'
@@ -164,10 +194,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/affaires'
     | '/appels-offres'
     | '/calendrier-ao'
     | '/calendrier-editorial'
     | '/clients'
+    | '/commandes'
+    | '/commandes-internes'
     | '/consultations'
     | '/devis'
     | '/dossiers'
@@ -180,10 +213,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/affaires'
     | '/appels-offres'
     | '/calendrier-ao'
     | '/calendrier-editorial'
     | '/clients'
+    | '/commandes'
+    | '/commandes-internes'
     | '/consultations'
     | '/devis'
     | '/dossiers'
@@ -197,10 +233,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AffairesRoute: typeof AffairesRoute
   AppelsOffresRoute: typeof AppelsOffresRouteWithChildren
   CalendrierAoRoute: typeof CalendrierAoRoute
   CalendrierEditorialRoute: typeof CalendrierEditorialRoute
   ClientsRoute: typeof ClientsRoute
+  CommandesRoute: typeof CommandesRoute
+  CommandesInternesRoute: typeof CommandesInternesRoute
   ConsultationsRoute: typeof ConsultationsRoute
   DevisRoute: typeof DevisRoute
   DossiersRoute: typeof DossiersRoute
@@ -217,6 +256,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/affaires': {
+      id: '/affaires'
+      path: '/affaires'
+      fullPath: '/affaires'
+      preLoaderRoute: typeof AffairesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/appels-offres': {
@@ -245,6 +291,20 @@ declare module '@tanstack/react-router' {
       path: '/clients'
       fullPath: '/clients'
       preLoaderRoute: typeof ClientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commandes': {
+      id: '/commandes'
+      path: '/commandes'
+      fullPath: '/commandes'
+      preLoaderRoute: typeof CommandesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commandes-internes': {
+      id: '/commandes-internes'
+      path: '/commandes-internes'
+      fullPath: '/commandes-internes'
+      preLoaderRoute: typeof CommandesInternesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/consultations': {
@@ -339,10 +399,13 @@ const OpportunitesRouteWithChildren = OpportunitesRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AffairesRoute: AffairesRoute,
   AppelsOffresRoute: AppelsOffresRouteWithChildren,
   CalendrierAoRoute: CalendrierAoRoute,
   CalendrierEditorialRoute: CalendrierEditorialRoute,
   ClientsRoute: ClientsRoute,
+  CommandesRoute: CommandesRoute,
+  CommandesInternesRoute: CommandesInternesRoute,
   ConsultationsRoute: ConsultationsRoute,
   DevisRoute: DevisRoute,
   DossiersRoute: DossiersRoute,

@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { CalendarClock, Eye, FileSpreadsheet, History as HistoryIcon, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { DevisWizard } from "@/components/geodata/DevisWizard";
 import { PageHeader, SectionCard, StatusBadge } from "@/components/geodata/ui-bits";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/clients")({
 });
 
 function ClientsPage() {
-  const { state, setState } = useGeo();
+  const { state, setState, updateOpportunite } = useGeo();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -142,7 +143,10 @@ function ClientsPage() {
                           variant="ghost"
                           title="Planifier une relance"
                           onClick={() => {
-                            if (!oppDevis) return toast("Aucune opportunité active à relancer");
+                            if (!oppDevis) {
+                              toast("Aucune opportunité active à relancer");
+                              return;
+                            }
                             updateOpportunite(oppDevis.id, { stage: "Relance", prochaineAction: `Relance commerciale de ${c.contact}` });
                             toast.success(`Relance planifiée pour ${c.nom}`);
                           }}
@@ -150,7 +154,7 @@ function ClientsPage() {
                           <CalendarClock className="size-4" />
                         </Button>
                         <Button asChild size="sm" variant="ghost" title="Voir l'historique">
-                          <Link to="/clients/$id" params={{ id: c.id }}><History className="size-4" /></Link>
+                          <Link to="/clients/$id" params={{ id: c.id }}><HistoryIcon className="size-4" /></Link>
                         </Button>
                       </div>
                     </TableCell>

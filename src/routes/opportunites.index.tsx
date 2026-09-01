@@ -246,6 +246,17 @@ function OpportunitesPage() {
         <div className="flex gap-3 overflow-x-auto pb-4">
           {OPP_STAGES.map((stage) => {
             const items = filtrees.filter((o) => o.stage === stage);
+            const volume = items.reduce((s, o) => s + o.montantEstime, 0);
+            const teinte =
+              stage === "Gagné"
+                ? "bg-success"
+                : stage === "Perdu"
+                  ? "bg-muted-foreground"
+                  : stage === "Relance"
+                    ? "bg-warning"
+                    : stage.startsWith("Devis")
+                      ? "bg-info"
+                      : "bg-primary";
             return (
               <div
                 key={stage}
@@ -254,41 +265,69 @@ function OpportunitesPage() {
                   const id = e.dataTransfer.getData("text/plain");
                   if (id) deplacer(id, stage);
                 }}
-                className="flex w-72 shrink-0 flex-col rounded-xl border border-border bg-secondary/50"
+                className="flex w-[19rem] shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-secondary/40"
               >
+                <span className={`block h-1 w-full ${teinte}`} />
                 <div className="flex items-center justify-between border-b border-border px-3 py-2.5">
-                  <span className="text-xs font-semibold tracking-wide text-foreground uppercase">{stage}</span>
+                  <div className="min-w-0">
+                    <p className="truncate text-xs font-semibold tracking-wide text-foreground uppercase">{stage}</p>
+                    <p className="text-[11px] text-muted-foreground tabular-nums">{fmtMAD(volume)}</p>
+                  </div>
                   <span className="rounded-full bg-card px-2 py-0.5 text-xs font-medium text-muted-foreground">{items.length}</span>
                 </div>
                 <div className="flex-1 space-y-2 p-2">
-                  {items.map((o) => (
-                    <Link
-                      key={o.id}
-                      to="/opportunites/$id"
-                      params={{ id: o.id }}
-                      draggable
-                      onDragStart={(e) => e.dataTransfer.setData("text/plain", o.id)}
-                      className="block cursor-grab rounded-lg border border-border bg-card p-3 transition-colors hover:border-primary/50 active:cursor-grabbing"
-                    >
-                      <p className="text-xs font-semibold text-foreground">{clientById(o.clientId)?.nom}</p>
-                      <p className="mt-0.5 text-sm text-foreground">{o.titre}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">{o.contact} · {o.type}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">{o.service}</p>
-                      <p className="mt-1.5 text-sm font-semibold text-primary">{fmtMAD(o.montantEstime)}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">Prochaine action : {o.prochaineAction}</p>
-                      <p className="text-xs text-muted-foreground">Échéance : {fmtDate(o.echeance)}</p>
-                      <div className="mt-2 flex items-center justify-between">
-                        <span className="text-xs text-muted-foreground">{userById(o.responsableId)?.initiales}</span>
-                        <ScoreIA score={o.scoreIA} />
-                      </div>
-                    </Link>
-                  ))}
+                  {items.map((o) => {
+                    const j = Math.ceil((new Date(o.echeance).getTime() - Date.now()) / 86400000);
+                    const urgence = j < 0 ? "text-muted-foreground" : j <= 3 ? "text-destructive" : j <= 7 ? "text-warning-foreground" : "text-muted-foreground";
+                    return (
+                      <Link
+                        key={o.id}
+                        to="/opportunites/$id"
+                        params={{ id: o.id }}
+                        draggable
+                        onDragStart={(e) => e.dataTransfer.setData("text/plain", o.id)}
+                        className="group block cursor-grab rounded-lg border border-border bg-card p-3 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md active:cursor-grabbing"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <p className="min-w-0 flex-1 truncate text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                            {clientById(o.clientId)?.nom}
+                          </p>
+                          <span className="shrink-0 rounded bg-secondary px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                            {o.type}
+                          </span>
+                        </div>
+                        <p className="mt-1 line-clamp-2 text-sm font-medium text-foreground group-hover:text-primary">{o.titre}</p>
+                        <div className="mt-2 flex items-center justify-between gap-2">
+                          <span className="rounded-full border border-primary/25 bg-accent px-2 py-0.5 text-[10px] font-medium text-accent-foreground">
+                            {o.service}
+                          </span>
+                          <span className="text-sm font-semibold text-primary tabular-nums">{fmtMAD(o.montantEstime)}</span>
+                        </div>
+                        <div className="mt-2 rounded-md border-l-2 border-primary/60 bg-secondary/60 px-2 py-1.5">
+                          <p className="text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">Prochaine action</p>
+                          <p className="truncate text-xs text-foreground">{o.prochaineAction}</p>
+                        </div>
+                        <div className="mt-2 flex items-center justify-between gap-2">
+                          <span className={`text-[11px] font-medium ${urgence}`}>
+                            {fmtDate(o.echeance)} · {j < 0 ? "échue" : `J-${j}`}
+                          </span>
+                          <span className="grid size-6 place-items-center rounded-full bg-secondary text-[10px] font-semibold text-foreground">
+                            {userById(o.responsableId)?.initiales}
+                          </span>
+                        </div>
+                        <div className="mt-2 border-t border-border pt-2">
+                          <ScoreIA score={o.scoreIA} />
+                        </div>
+                      </Link>
+                    );
+                  })}
                   {!items.length ? <p className="px-2 py-6 text-center text-xs text-muted-foreground">Aucune opportunité</p> : null}
                 </div>
               </div>
             );
           })}
         </div>
+
       ) : (
         <SectionCard>
           <div className="overflow-x-auto">

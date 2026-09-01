@@ -54,7 +54,7 @@ function AffaireDetail() {
     <div>
       <PageHeader
         titre={`${affaire.reference} — ${affaire.titre}`}
-        sousTitre={`${clientById(affaire.clientId)?.nom} · Chef de projet ${userById(affaire.chefDeProjetId)?.nom} · Origine : ${affaire.sourceType} ${affaire.source}`}
+        sousTitre={`${clientById(affaire.clientId)?.nom} · Chef de projet ${userById(affaire.chefDeProjetId)?.nom} · Origine : ${affaire.source}`}
         actions={
           <>
             <StatusBadge statut={affaire.statut} />
@@ -90,7 +90,7 @@ function AffaireDetail() {
               <Field label="Date de début" value={fmtDate(affaire.dateDebut)} />
               <Field label="Date limite" value={fmtDate(affaire.dateLimite)} />
               <Field label="Services" value={affaire.services.join(", ")} />
-              <Field label="Origine" value={`${affaire.sourceType} ${affaire.source}`} />
+              <Field label="Origine" value={affaire.source} />
             </dl>
             <p className="mt-4 text-sm text-muted-foreground"><strong className="text-foreground">Livrables attendus :</strong> {affaire.livrables.join(", ")}</p>
             <p className="mt-1 text-sm text-muted-foreground"><strong className="text-foreground">Conditions :</strong> {affaire.conditions}</p>

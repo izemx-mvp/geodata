@@ -295,7 +295,7 @@ function NouvelleTache({ ciId, onAdd }: { ciId: string; onAdd: (t: Tache) => voi
           </div>
           <div>
             <Label>Technicien</Label>
-            <Select name="responsable" defaultValue={techs[0]?.id}>
+            <Select name="responsable" defaultValue={techs[0]?.id ?? ""}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>{techs.map((t) => (<SelectItem key={t.id} value={t.id}>{t.nom} — {t.chargePct ?? 0}%</SelectItem>))}</SelectContent>
             </Select>

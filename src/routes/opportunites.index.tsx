@@ -20,7 +20,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { fmtDate, fmtMAD, useGeo } from "@/lib/geodata/store";
 import { OPP_STAGES, OPP_TYPES, SERVICES, type OppStage, type Opportunite } from "@/lib/geodata/types";
 
-export const Route = createFileRoute("/opportunites")({
+export const Route = createFileRoute("/opportunites/")({
   head: () => ({
     meta: [
       { title: "Opportunités commerciales — GEODATA" },

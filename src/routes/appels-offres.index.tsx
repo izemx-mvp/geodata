@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { fmtDate, fmtMAD, joursRestants, useGeo } from "@/lib/geodata/store";
 import { AO_STATUTS, SERVICES } from "@/lib/geodata/types";
 
-export const Route = createFileRoute("/appels-offres")({
+export const Route = createFileRoute("/appels-offres/")({
   head: () => ({
     meta: [
       { title: "Appels d'offres — GEODATA" },

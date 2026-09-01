@@ -46,7 +46,6 @@ export const SERVICES = [
 export type Service = (typeof SERVICES)[number];
 
 export const OPP_STAGES = [
-  "Nouveau",
   "À qualifier",
   "Qualifié",
   "Devis à préparer",

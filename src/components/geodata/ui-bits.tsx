@@ -116,28 +116,39 @@ export function KpiCard({
 }) {
   const accents: Record<string, string> = {
     neutre: "border-border",
-    orange: "border-primary/30 bg-accent/40",
+    orange: "border-primary/35 bg-accent/40",
     rouge: "border-destructive/30 bg-destructive/5",
     vert: "border-success/30 bg-success/5",
   };
+  const affiche = useCountUp(value);
   return (
     <button
       type="button"
       onClick={onClick}
       className={cn(
-        "card-elev group flex flex-col items-start rounded-xl border bg-card p-4 text-left transition-all hover:-translate-y-0.5 hover:border-primary/50",
+        "surface-card hover-lift group relative flex flex-col items-start overflow-hidden p-4 text-left",
         accents[tone],
       )}
     >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -top-10 -right-10 size-24 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background: "radial-gradient(circle, var(--brand) 0%, transparent 68%)", opacity: 0.12 }}
+      />
       <div className="flex w-full items-center justify-between">
         <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">{label}</span>
-        {icon ? <span className="text-primary">{icon}</span> : null}
+        {icon ? (
+          <span className="grid size-8 place-items-center rounded-md border border-primary/25 bg-accent text-accent-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+            {icon}
+          </span>
+        ) : null}
       </div>
-      <span className="mt-2 text-3xl font-semibold tabular-nums text-foreground">{value}</span>
+      <span className="mt-2 text-3xl font-semibold tabular-nums text-foreground">{affiche}</span>
       {hint ? <span className="mt-1 text-xs text-muted-foreground">{hint}</span> : null}
     </button>
   );
 }
+
 
 export function SectionCard({
   titre,

@@ -143,11 +143,11 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
-        <div className="pointer-events-none absolute inset-0 opacity-40 geo-grid-live" />
-        <div className="relative flex min-h-0 flex-1 flex-col">
+      <aside className="relative sticky top-0 hidden h-screen w-64 shrink-0 flex-col overflow-hidden border-r border-sidebar-border bg-sidebar lg:flex">
+        <div className="pointer-events-none absolute inset-0 opacity-30 geo-grid-live" />
         <Logo />
-        <ScrollArea className="flex-1">
+        <ScrollArea className="relative flex-1">
+
 
           <nav className="space-y-5 px-3 pb-8">
             {NAV.map((groupe) => {

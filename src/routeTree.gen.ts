@@ -28,6 +28,7 @@ import { Route as LivraisonsRouteImport } from './routes/livraisons'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as OpportunitesRouteImport } from './routes/opportunites'
 import { Route as OpportunitesDetecteesRouteImport } from './routes/opportunites-detectees'
+import { Route as ParcoursRouteImport } from './routes/parcours'
 import { Route as PlanningRouteImport } from './routes/planning'
 import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as RejetsRouteImport } from './routes/rejets'
@@ -134,6 +135,11 @@ const OpportunitesDetecteesRoute = OpportunitesDetecteesRouteImport.update({
   path: '/opportunites-detectees',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ParcoursRoute = ParcoursRouteImport.update({
+  id: '/parcours',
+  path: '/parcours',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlanningRoute = PlanningRouteImport.update({
   id: '/planning',
   path: '/planning',
@@ -205,6 +211,7 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/parcours': typeof ParcoursRoute
   '/planning': typeof PlanningRoute
   '/references': typeof ReferencesRoute
   '/rejets': typeof RejetsRoute
@@ -236,6 +243,7 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/parcours': typeof ParcoursRoute
   '/planning': typeof PlanningRoute
   '/references': typeof ReferencesRoute
   '/rejets': typeof RejetsRoute
@@ -268,6 +276,7 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/opportunites': typeof OpportunitesRouteWithChildren
   '/opportunites-detectees': typeof OpportunitesDetecteesRoute
+  '/parcours': typeof ParcoursRoute
   '/planning': typeof PlanningRoute
   '/references': typeof ReferencesRoute
   '/rejets': typeof RejetsRoute
@@ -301,6 +310,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/opportunites'
     | '/opportunites-detectees'
+    | '/parcours'
     | '/planning'
     | '/references'
     | '/rejets'
@@ -332,6 +342,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/opportunites'
     | '/opportunites-detectees'
+    | '/parcours'
     | '/planning'
     | '/references'
     | '/rejets'
@@ -363,6 +374,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/opportunites'
     | '/opportunites-detectees'
+    | '/parcours'
     | '/planning'
     | '/references'
     | '/rejets'
@@ -395,6 +407,7 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   OpportunitesRoute: typeof OpportunitesRouteWithChildren
   OpportunitesDetecteesRoute: typeof OpportunitesDetecteesRoute
+  ParcoursRoute: typeof ParcoursRoute
   PlanningRoute: typeof PlanningRoute
   ReferencesRoute: typeof ReferencesRoute
   RejetsRoute: typeof RejetsRoute
@@ -539,6 +552,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OpportunitesDetecteesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/parcours': {
+      id: '/parcours'
+      path: '/parcours'
+      fullPath: '/parcours'
+      preLoaderRoute: typeof ParcoursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/planning': {
       id: '/planning'
       path: '/planning'
@@ -668,6 +688,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   OpportunitesRoute: OpportunitesRouteWithChildren,
   OpportunitesDetecteesRoute: OpportunitesDetecteesRoute,
+  ParcoursRoute: ParcoursRoute,
   PlanningRoute: PlanningRoute,
   ReferencesRoute: ReferencesRoute,
   RejetsRoute: RejetsRoute,

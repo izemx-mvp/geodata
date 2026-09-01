@@ -28,7 +28,10 @@ import {
   UsersRound,
   Route as Route2,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { BrandLogo } from "./BrandLogo";
+import { LoginScreen } from "./LoginScreen";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {

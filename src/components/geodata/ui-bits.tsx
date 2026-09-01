@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function PageHeader({
   titre,
@@ -12,7 +12,8 @@ export function PageHeader({
 }) {
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-5">
-      <div>
+      <div className="relative pl-4">
+        <span className="absolute top-1 bottom-1 left-0 w-[3px] rounded-full bg-primary" />
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">{titre}</h1>
         {sousTitre ? <p className="mt-1 text-sm text-muted-foreground">{sousTitre}</p> : null}
       </div>
@@ -20,6 +21,34 @@ export function PageHeader({
     </div>
   );
 }
+
+/** Counts up to a numeric value; renders strings as-is. */
+function useCountUp(value: number | string) {
+  const [display, setDisplay] = useState<number | string>(typeof value === "number" ? 0 : value);
+  const raf = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (typeof value !== "number") {
+      setDisplay(value);
+      return;
+    }
+    const start = performance.now();
+    const duration = 700;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setDisplay(Math.round(value * eased));
+      if (p < 1) raf.current = requestAnimationFrame(tick);
+    };
+    raf.current = requestAnimationFrame(tick);
+    return () => {
+      if (raf.current) cancelAnimationFrame(raf.current);
+    };
+  }, [value]);
+
+  return display;
+}
+
 
 const TONE: Record<string, string> = {
   neutre: "bg-secondary text-secondary-foreground border-border",

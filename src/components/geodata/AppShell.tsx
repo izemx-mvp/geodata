@@ -66,6 +66,8 @@ const NAV: { groupe: string | null; items: NavItem[] }[] = [
       { to: "/clients", label: "Prospects & Clients", icon: <Building2 className="size-4" />, section: "commercial" },
       { to: "/devis", label: "Devis", icon: <FileSpreadsheet className="size-4" />, section: "commercial" },
       { to: "/community-manager", label: "Community Manager IA", icon: <MessageSquareShare className="size-4" />, section: "social" },
+      { to: "/reseaux-sociaux", label: "Réseaux sociaux", icon: <Share2 className="size-4" />, section: "social" },
+      { to: "/calendrier-editorial", label: "Calendrier éditorial", icon: <CalendarDays className="size-4" />, section: "social" },
     ],
   },
   {

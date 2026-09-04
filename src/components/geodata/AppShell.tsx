@@ -30,6 +30,8 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 import { BrandLogo } from "./BrandLogo";
 import { LoginScreen } from "./LoginScreen";
+import { GeoBackground } from "./GeoBackground";
+
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";

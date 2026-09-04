@@ -242,9 +242,13 @@ export function AppShell({ children }: { children: ReactNode }) {
             </Button>
           </div>
         </header>
-        <main key={pathname} className="page-reveal min-w-0 flex-1 px-5 py-6 lg:px-8">
-          {children}
-        </main>
+        <div className="relative min-w-0 flex-1">
+          <GeoBackground className="fixed inset-0 opacity-[0.55]" />
+          <main key={pathname} className="page-reveal relative min-w-0 px-5 py-6 lg:px-8">
+            {children}
+          </main>
+        </div>
+
 
       </div>
     </div>
